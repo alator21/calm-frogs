@@ -1,0 +1,11 @@
+.example-viewport {
+  text-align: center;
+  height: 100vh;
+  border: 1px solid black;
+}
+
+
+.example-item {
+  height: 100px;
+  margin: 5px;
+}
