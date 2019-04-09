@@ -13,7 +13,7 @@ import {
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  user: User = new User();
+  user: User = new User('Raf');
   isLoggedIn:Boolean;
   constructor() {}
 

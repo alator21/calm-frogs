@@ -8,129 +8,71 @@ import {
   User
 } from '../models/user';
 import {
+  CollectionViewer,
+  DataSource
+} from '@angular/cdk/collections';
+import {
+  ChangeDetectionStrategy,
+  Component
+} from '@angular/core';
+import {
+  BehaviorSubject,
   Observable,
-  of
+  of ,
+  Subscription
 } from 'rxjs';
 
-import {
-  DataSource
-} from '@angular/cdk/table';
-import { CollectionViewer } from '@angular/cdk/collections';
-import { BehaviorSubject, Subscription } from 'rxjs';
 const POSTS: Post[] = [{
-    'content': `Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. We swallow it too fast, we choke. We get some in our lungs, we drown. However unreal it may seem, we are connected, you and I. We're on the same curve, just on opposite ends.
-    `,
-    'author': new User('Raf'),
+    'content': '1',
+    'author': new User('raf'),
     'created_at': new Date()
   },
   {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
+    'content': '2',
+    'author': new User('raf'),
     'created_at': new Date()
   },
   {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
+    'content': '3',
+    'author': new User('raf'),
     'created_at': new Date()
   },
   {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
+    'content': '4',
+    'author': new User('raf'),
     'created_at': new Date()
   },
   {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
+    'content': '5',
+    'author': new User('raf'),
     'created_at': new Date()
   },
   {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
+    'content': '6',
+    'author': new User('raf'),
+    'created_at': new Date()
+  },
+
+  {
+    'content': '7',
+    'author': new User('raf'),
     'created_at': new Date()
   },
   {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
+    'content': '8',
+    'author': new User('raf'),
     'created_at': new Date()
   },
   {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
+    'content': '9',
+    'author': new User('raf'),
     'created_at': new Date()
   },
   {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
+    'content': '10',
+    'author': new User('raf'),
     'created_at': new Date()
   },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  },
-  {
-    'content': `My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
-    `,
-    'author': new User('George'),
-    'created_at': new Date()
-  }
 
 ]
 
@@ -140,24 +82,65 @@ export class PostService {
   constructor() {}
 
 
-  getPosts(limit:number,page:number): Observable < any > {
-    return of(this.posts);
+  getPosts(limit: number, page: number) {
+    return this.posts;
+  }
+
+  getPost(postIndex: number) {
+    return this.posts[postIndex];
   }
 }
 
 
-export class PostDataSource extends DataSource<string | undefined> {
-  private dataStream = new BehaviorSubject<(string | undefined)[]>([]);
+export class PostDataSource extends DataSource < string | undefined > {
+
+  private length = this.postService.getPosts.length;
+  private pageSize = this.length/2;
+  private cachedData = Array.from < string > ({
+    length: this.length
+  });
+  private fetchedPages = new Set < number > ();
+  private dataStream = new BehaviorSubject < (string | undefined)[] > (this.cachedData);
   private subscription = new Subscription();
-  constructor(private postService: PostService){super()}
-  connect(collectionViewer: CollectionViewer): Observable<(string | undefined)[]> {
-    this.postService.getPosts(5,0).subscribe((posts) =>{
-      this.dataStream.next(posts);
-    });
+  constructor(private postService: PostService) {
+    super()
+  }
+  connect(collectionViewer: CollectionViewer): Observable < (string | undefined)[] > {
+    this.postService.getPosts(1, 0);
+    this.subscription.add(collectionViewer.viewChange.subscribe(range => {
+      console.log(range);
+      const startPage = this.getPageForIndex(range.start);
+      const endPage = this.getPageForIndex(range.end - 1);
+      for (let i = startPage; i <= endPage; i++) {
+        this.fetchPage(i);
+      }
+    }));
     return this.dataStream;
   }
 
   disconnect(): void {
     this.subscription.unsubscribe();
+  }
+
+  private getPageForIndex(index: number): number {
+    return Math.floor(index / this.pageSize);
+  }
+
+  private fetchPage(page: number) {
+    // console.log(page);
+    if (this.fetchedPages.has(page)) {
+      return;
+    }
+    this.fetchedPages.add(page);
+
+    // Use `setTimeout` to simulate fetching data from server.
+    console.log(page);
+    this.cachedData.splice(page * this.pageSize, this.pageSize,
+      ...Array.from({
+        length: this.length
+      })
+      .map((_, i) => this.postService.getPost(page).content));
+      console.log(this.cachedData);
+    this.dataStream.next(this.cachedData);
   }
 }
