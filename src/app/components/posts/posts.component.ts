@@ -5,8 +5,11 @@ import {
 } from '@angular/core';
 import {
   PostService,
-  PostDataSource
 } from '../../services/post.service';
+
+import {
+  AllPostsDataSource
+} from '../../dataSources/post-data-source';
 import {
   Post
 } from '../../models/post';
@@ -17,13 +20,11 @@ import {
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsComponent implements OnInit {
-  ds = new PostDataSource(this.postService);
+  ds = new AllPostsDataSource(this.postService, 5);
   constructor(private postService: PostService) {}
 
   ngOnInit() {}
 
 }
-
