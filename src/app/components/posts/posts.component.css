@@ -6,6 +6,9 @@
 
 
 .example-item {
-  height: 100px;
-  margin: 5px;
+  height: 150px;
+}
+
+span.author{
+  border:2px solid red;
 }

@@ -56,18 +56,13 @@ export class AllPostsDataSource extends DataSource < Post | undefined > {
       return;
     }
     this.fetchedPages.add(page);
-	let d = await this.postService.getPosts(this.pageSize, page);
-	console.log(d);
+    let d = await this.postService.getPosts(this.pageSize, page);
     this.cachedData.splice(page * this.pageSize, this.pageSize,
       ...Array.from < Post > ({
         length: d.length
       }).map((_, i) => {
-        return new Post(d[i].content, d[i].username, d[i].created_at);
+        return new Post(d[i].content, d[i].author, d[i].created_at);
       }));
-    let lastElementIndex = this.cachedData.length - 1;
-    if (this.cachedData[lastElementIndex]) {
-      this.cachedData[lastElementIndex + 1] = new Post("End of posts", null, "");
-    }
     this.dataStream.next(this.cachedData);
   }
 }

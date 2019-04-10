@@ -1,3 +1,13 @@
-<cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-  <div *cdkVirtualFor="let item of ds" class="example-item">{{item.content  || 'Loading ...'}}</div>
+<cdk-virtual-scroll-viewport itemSize="150" class="example-viewport">
+  <div *cdkVirtualFor="let post of posts" class="example-item">
+    <div *ngIf="post">
+      <p>
+          {{post.content || 'Loading...'}}
+      </p>
+      <p>
+        <span class='created_at'>{{post.created_at}}</span> &nbsp;&nbsp;By <span class='author'>{{post.author.username}}</span>
+      </p>
+      <hr>
+    </div>
+  </div>
 </cdk-virtual-scroll-viewport>

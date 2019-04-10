@@ -14,6 +14,8 @@ import {
   FlexLayoutModule
 } from '@angular/flex-layout';
 
+import { FormsModule } from '@angular/forms';
+
 import {
   AppRoutingModule
 } from './app-routing.module';
@@ -46,7 +48,8 @@ import {
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule
   ],
   providers: [PostService],
   bootstrap: [AppComponent]

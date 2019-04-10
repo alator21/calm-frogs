@@ -1,3 +1,18 @@
-<p>
-  login works!
-</p>
+<form class="example-form" autocomplete="off">
+  <p>
+    <mat-form-field class="example-full-width">
+      <input type="text" matInput placeholder="Username" [(ngModel)]="user.username" name="username">
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field class="example-full-width">
+      <input type="password" matInput placeholder="Password" [(ngModel)]="user.password" name="password">
+    </mat-form-field>
+  </p>
+
+  <p>
+    <button type='submit' mat-flat-button color="primary" (click)="login(user)">Login</button>
+  </p>
+
+
+</form>

@@ -5,27 +5,22 @@ import {
   Post
 } from '../models/post';
 import {
-  User
-} from '../models/user';
-import {
-  CollectionViewer,
-  DataSource
-} from '@angular/cdk/collections';
-import {
-  BehaviorSubject,
-  Observable,
-  of ,
-  Subscription
+  of 
 } from 'rxjs';
-
-
-const POSTS: Post[] = [new Post("123","","")]
+import {
+  POSTS
+} from '../mock-data';
 
 @Injectable()
 export class PostService {
+  posts: Post[] = POSTS.sort((a,b)=>a.created_at.getTime() - b.created_at.getTime());
   constructor() {}
 
-  async getPosts(limit: number, page: number): Promise < any > {
-    return POSTS;
+  async getPosts(limit: number, page: number): Promise < Post[] > {
+    return of(this.posts.slice(limit * page, limit * page + limit)).toPromise();
+  }
+
+  async getPostsLength(): Promise < number > {
+    return of(this.posts.length).toPromise();
   }
 }

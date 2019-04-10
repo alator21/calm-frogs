@@ -9,8 +9,12 @@ import {
   MatListModule,
   MatCardModule,
   MatButtonModule,
-  MatTableModule
+  MatTableModule,
+  MatInputModule
 } from '@angular/material';
+
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 
@@ -25,7 +29,10 @@ import {ScrollDispatchModule} from '@angular/cdk/scrolling';
     MatCardModule,
     MatButtonModule,
     MatTableModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule
   ]
 })
 export class MaterialModule {}

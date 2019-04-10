@@ -10,9 +10,6 @@ import {
 import {
   AllPostsDataSource
 } from '../../dataSources/post-data-source';
-import {
-  Post
-} from '../../models/post';
 
 
 
@@ -22,9 +19,12 @@ import {
   styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent implements OnInit {
-  ds = new AllPostsDataSource(this.postService, 5);
+  posts: AllPostsDataSource;
   constructor(private postService: PostService) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    let howManyPosts = await this.postService.getPostsLength();
+    this.posts = new AllPostsDataSource(this.postService, howManyPosts);
+  }
 
 }
