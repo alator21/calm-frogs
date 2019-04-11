@@ -19,7 +19,7 @@ import {
   styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent implements OnInit {
-  posts: AllPostsDataSource;
+  private posts: AllPostsDataSource;
   constructor(private postService: PostService) {}
 
   async ngOnInit() {

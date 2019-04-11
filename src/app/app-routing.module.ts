@@ -14,10 +14,21 @@ import {
   LoginComponent
 } from './components/login/login.component';
 
+import {
+  RegisterComponent
+} from './components/register/register.component';
+
+import {
+  UsersComponent
+} from './components/users/users.component';
+
+import {
+  UserDetailsComponent
+} from './components/user-details/user-details.component';
+
 const routes: Routes = [{
     'path': '',
-    'component': PostsComponent,
-    runGuardsAndResolvers: 'always',
+    'component': PostsComponent
   },
   {
     'path': 'posts',
@@ -27,10 +38,22 @@ const routes: Routes = [{
     'path': 'login',
     'component': LoginComponent
   },
+  {
+    'path': 'register',
+    'component': RegisterComponent
+  },
+  {
+    'path': 'users/discover',
+    'component': UsersComponent
+  },
+  {
+    'path': 'users/user/:username',
+    'component': UserDetailsComponent
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

@@ -9,30 +9,31 @@ import {
 } from 'rxjs';
 
 import {
-  PostService
-} from '../services/post.service';
+  UserService
+} from '../services/user.service';
 import {
-  Post
-} from '../models/post';
+  User
+} from '../models/user';
 
-export class AllPostsDataSource extends DataSource < Post | undefined > {
+export class AllUsersDataSource extends DataSource < User | undefined > {
   private length;
   private pageSize = 5;
   private fetchedPages = new Set < number > ();
   private cachedData;
   private dataStream;
   private subscription = new Subscription();
+  private searchString;
 
-  constructor(private postService: PostService, numberOfPosts: number) {
+  constructor(private userService: UserService, numberOfUsers: number) {
     super()
-    this.length = numberOfPosts;
-    this.cachedData = Array.from < Post > ({
+    this.length = numberOfUsers;
+    this.cachedData = Array.from < User > ({
       length: this.length
     });
-    this.dataStream = new BehaviorSubject < (Post | undefined)[] > (this.cachedData);
+    this.dataStream = new BehaviorSubject < (User | undefined)[] > (this.cachedData);
   }
 
-  connect(collectionViewer: CollectionViewer): Observable < (Post | undefined)[] > {
+  connect(collectionViewer: CollectionViewer): Observable < (User | undefined)[] > {
     this.subscription.add(collectionViewer.viewChange.subscribe(async range => {
       const startPage = this.getPageForIndex(range.start);
       const endPage = this.getPageForIndex(range.end - 1);
@@ -47,6 +48,17 @@ export class AllPostsDataSource extends DataSource < Post | undefined > {
     this.subscription.unsubscribe();
   }
 
+  async search(username: string) {
+    this.searchString = username;
+    let numberOfUsers = await this.userService.getNumberOfUsers(this.searchString);
+    this.length = numberOfUsers;
+    this.fetchedPages = new Set < number > ();
+    this.cachedData = Array.from < User > ({
+      length: this.length
+    });
+    await this.fetchPage(0);
+  }
+
   private getPageForIndex(index: number): number {
     return Math.floor(index / this.pageSize);
   }
@@ -56,15 +68,15 @@ export class AllPostsDataSource extends DataSource < Post | undefined > {
       return;
     }
     this.fetchedPages.add(page);
-    let d = await this.postService.getPosts(this.pageSize, page);
+    let d = await this.userService.getUsersWithUsername(this.searchString, this.pageSize, page);
     this.cachedData.splice(page * this.pageSize, this.pageSize,
-      ...Array.from < Post > ({
+      ...Array.from < User > ({
         length: d.length
       }).map((_, i) => {
-        return new Post({
-          'content': d[i].content,
-          'author': d[i].author,
-          'created_at': d[i].created_at
+        return new User({
+          'username': d[i].username,
+          'email': d[i].email,
+          'realName': d[i].realName
         });
       }));
     this.dataStream.next(this.cachedData);

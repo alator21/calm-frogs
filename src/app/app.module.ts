@@ -35,13 +35,19 @@ import {
 import {
   PostService
 } from './services/post.service';
+import { RegisterComponent } from './components/register/register.component';
+import { UsersComponent } from './components/users/users.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostsComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent,
+    UsersComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -23,29 +23,22 @@ import {
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  user: User = new User('Raf');
-  isLoggedIn: Boolean;
-  navigationSubscription;
-  constructor(private router: Router, private authService: AuthService) {
-    this.navigationSubscription = this.router.events.subscribe((e: any) => {
-      if (e instanceof NavigationEnd) {
-        this.updateNavbar();
-      }
-    });
+  private user: User = new User();
+  private isLoggedIn: Boolean;
+  constructor(private router: Router, private authService: AuthService) {}
+
+  async ngOnInit() {
+    await this.updateNavbar()
   }
 
-  ngOnInit() {
-    this.updateNavbar()
-  }
-
-  updateNavbar() {
+  async updateNavbar() {
     this.isLoggedIn = this.authService.isUserLoggedIn();
-    this.user.username = 'Raf';
+    this.user = await this.authService.getTHEUser();
   }
 
   logout() {
     this.authService.logout();
-    this.router.navigateByUrl('/');
+    window.location.href = '/';
   }
 
 }

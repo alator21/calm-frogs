@@ -1,0 +1,19 @@
+<p *ngIf="user">
+  <mat-form-field>
+    <input matInput placeholder="Search by username" [(ngModel)]="user.username" (ngModelChange)="onChange($event)"
+      autocomplete="off">
+  </mat-form-field>
+</p>
+
+
+
+<cdk-virtual-scroll-viewport itemSize="150" class="example-viewport">
+  <div *cdkVirtualFor="let user of users" class="example-item">
+    <div *ngIf="user">
+      <p>
+        <a routerLink="/users/user/{{user.username}}">{{user.username || 'Loading...'}}</a>
+      </p>
+      <hr>
+    </div>
+  </div>
+</cdk-virtual-scroll-viewport>

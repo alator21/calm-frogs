@@ -5,7 +5,7 @@ import {
   Post
 } from '../models/post';
 import {
-  of 
+  of
 } from 'rxjs';
 import {
   POSTS
@@ -13,7 +13,7 @@ import {
 
 @Injectable()
 export class PostService {
-  posts: Post[] = POSTS.sort((a,b)=>a.created_at.getTime() - b.created_at.getTime());
+  private posts: Post[] = POSTS.sort((a, b) => a.created_at.getTime() - b.created_at.getTime());
   constructor() {}
 
   async getPosts(limit: number, page: number): Promise < Post[] > {

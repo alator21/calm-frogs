@@ -7,7 +7,6 @@ import {
   MatToolbarModule,
   MatIconModule,
   MatListModule,
-  MatCardModule,
   MatButtonModule,
   MatTableModule,
   MatInputModule
@@ -15,6 +14,7 @@ import {
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import {MatCardModule} from '@angular/material/card';
 
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 
