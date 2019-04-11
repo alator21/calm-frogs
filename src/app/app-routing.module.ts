@@ -16,7 +16,8 @@ import {
 
 const routes: Routes = [{
     'path': '',
-    'component': PostsComponent
+    'component': PostsComponent,
+    runGuardsAndResolvers: 'always',
   },
   {
     'path': 'posts',
@@ -29,7 +30,7 @@ const routes: Routes = [{
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

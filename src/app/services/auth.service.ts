@@ -15,11 +15,20 @@ import {
 })
 export class AuthService {
   users: User[] = USERS;
-
   constructor() {}
 
 
-  async login(user: User): Promise < any > {
+  login(user: User) {
+    localStorage.setItem('isLoggedIn', 'true');
     console.log(user);
+  }
+
+  logout() {
+    localStorage.setItem('isLoggedIn', 'false');
+    console.log('Logout!!');
+  }
+
+  isUserLoggedIn(): Boolean {
+    return localStorage.getItem('isLoggedIn') === "true";
   }
 }

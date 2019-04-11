@@ -10,7 +10,10 @@ import {
 import {
   AuthService
 } from '../../services/auth.service';
-
+import {
+  Router,
+  NavigationEnd
+} from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,14 +21,15 @@ import {
 })
 export class LoginComponent implements OnInit {
   user: User;
-  constructor(private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.user = new User('');
   }
 
-  async login(user: User) {
-    await this.authService.login(user);
+  login(user: User) {
+    this.authService.login(user);
+    this.router.navigateByUrl('/');
   }
 
 }

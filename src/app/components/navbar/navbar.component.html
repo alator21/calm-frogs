@@ -2,7 +2,7 @@
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <div>
-        <a>
+        <a routerLink="/">
           Calm Frogs
         </a>
       </div>
@@ -10,27 +10,27 @@
         <ul fxLayout fxLayoutGap="20px" class="navigation-items">
           <li *ngIf="!isLoggedIn">
             <a>
-              <span class="label"><a href="/login">Login</a></span>
+              <span class="label"><a routerLink="/login">Login</a></span>
             </a>
           </li>
           <li *ngIf="!isLoggedIn">
             <a>
-              <span class="label"><a href="#">Register</a></span>
+              <span class="label"><a routerLink="/register">Register</a></span>
             </a>
           </li>
           <li *ngIf="isLoggedIn">
             <a>
-              <span class="label"><a href="#">{{user.username | uppercase}}</a></span>
+              <span class="label"><a routerLink="/profiles/{{user.username}}">{{user.username | uppercase}}</a></span>
             </a>
           </li>
           <li *ngIf="isLoggedIn">
             <a>
-              <span class="label"><a href="#">Discover new users</a> </span>
+              <span class="label"><a routerLink="/users/discover">Discover new users</a> </span>
             </a>
           </li>
           <li *ngIf="isLoggedIn">
             <a>
-              <span class="label"><a href="#">Logout</a></span>
+              <span class="label"><a href="javascript:void(0)" (click)="logout()">Logout</a></span>
             </a>
           </li>
         </ul>
