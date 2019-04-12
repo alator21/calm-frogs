@@ -38,6 +38,7 @@ import {
 import { RegisterComponent } from './components/register/register.component';
 import { UsersComponent } from './components/users/users.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { PostDetailsComponent } from './components/post-details/post-details.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     LoginComponent,
     RegisterComponent,
     UsersComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    PostDetailsComponent
   ],
   imports: [
     BrowserModule,

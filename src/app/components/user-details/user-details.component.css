@@ -2,8 +2,18 @@
   max-width: 400px;
 }
 
-.example-header-image {
-  /* background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg'); */
-  background-size: cover;
+
+.example-viewport {
+  text-align: center;
+  height: 60vh;
+  border: 1px solid black;
 }
 
+
+.example-item {
+  height: 150px;
+}
+
+span.author{
+  border:2px solid red;
+}

@@ -23,8 +23,9 @@ export class PostsComponent implements OnInit {
   constructor(private postService: PostService) {}
 
   async ngOnInit() {
-    let howManyPosts = await this.postService.getPostsLength();
-    this.posts = new AllPostsDataSource(this.postService, howManyPosts);
+    let searchString = '';
+    let howManyPosts = await this.postService.getPostsLength(searchString);
+    this.posts = new AllPostsDataSource(this.postService, howManyPosts, searchString);
   }
 
 }

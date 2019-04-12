@@ -26,6 +26,10 @@ import {
   UserDetailsComponent
 } from './components/user-details/user-details.component';
 
+import {
+  PostDetailsComponent
+} from './components/post-details/post-details.component';
+
 const routes: Routes = [{
     'path': '',
     'component': PostsComponent
@@ -49,6 +53,10 @@ const routes: Routes = [{
   {
     'path': 'users/user/:username',
     'component': UserDetailsComponent
+  },
+  {
+    'path': 'posts/post/:postID',
+    'component': PostDetailsComponent
   },
 ];
 

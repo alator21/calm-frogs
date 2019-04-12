@@ -2,7 +2,10 @@
   <div *cdkVirtualFor="let post of posts" class="example-item">
     <div *ngIf="post">
       <p>
-        {{post.content || 'Loading...'}}
+        <a routerLink="/posts/post/{{post._id}}">
+          {{post.content || 'Loading...'}}
+        </a>
+        
       </p>
       <p>
         <span class='created_at'>
