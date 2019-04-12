@@ -33,7 +33,9 @@ export class NavbarComponent implements OnInit {
 
   async updateNavbar() {
     this.isLoggedIn = this.authService.isUserLoggedIn();
-    this.user = await this.authService.getTHEUser();
+    if (this.isLoggedIn){
+      this.user = await this.authService.getTHEUser();
+    }    
   }
 
   logout() {

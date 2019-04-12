@@ -26,9 +26,17 @@ export class LoginComponent implements OnInit {
     this.user = new User();
   }
 
-  login(user: User) {
-    this.authService.login(user);
-    window.location.href = '/';
+  async login(user: User) {
+    try {
+      let correctDetails = await this.authService.login(user);
+      if (correctDetails) {
+        window.location.href = '/';
+      } else {
+        console.log('Wrong username/password');
+      }
+    } catch (e) {
+      console.log(`Something wen't wrong ;(`);
+    }
   }
 
 }

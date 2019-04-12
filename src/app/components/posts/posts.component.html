@@ -1,9 +1,10 @@
+<app-new-post></app-new-post>
 <cdk-virtual-scroll-viewport itemSize="150" class="example-viewport">
   <div *cdkVirtualFor="let post of posts" class="example-item">
     <div *ngIf="post">
       <p>
-        <a routerLink="/posts/post/{{post._id}}">
-          {{post.content || 'Loading...'}}
+        <a  [innerHTML]="highlightHashtags(post)">
+          <!-- {{post.content || 'Loading...'}} -->
         </a>
         
       </p>

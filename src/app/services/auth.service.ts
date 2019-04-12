@@ -25,10 +25,22 @@ export class AuthService {
 
 
   async login(user: User): Promise < any > {
-    localStorage.setItem('isLoggedIn', 'true');
-    this.userIndex = Math.floor(Math.random() * USERS.length);
-    localStorage.setItem('userIndex', this.userIndex.toString());
-
+    let correctDetails = false;
+    let userIndex = -1;
+    for (let i = 0; i < this.users.length; i++) {
+      let u = this.users[i];
+      if (user.username === u.username && user.password === u.password) {
+        correctDetails = true;
+        userIndex = i;
+        break;
+      }
+    }
+    if (correctDetails) {
+      localStorage.setItem('isLoggedIn', 'true');
+      this.userIndex = userIndex;
+      localStorage.setItem('userIndex', this.userIndex.toString());
+    }
+    return correctDetails;
   }
 
   logout() {

@@ -79,7 +79,9 @@ export class AllPostsDataSource extends DataSource < Post | undefined > {
           'content': post.content,
           'author': post.author,
           'created_at': post.created_at,
-          '_id' : post._id
+          '_id': post._id,
+          'hashtags': post.hashtags,
+          'mentions': post.mentions
         });
       }));
     this.dataStream.next(this.cachedData);
@@ -125,7 +127,7 @@ export class UserPostsDataSource extends DataSource < Post | undefined > {
 
   public async search(searchString: string) {
     this.searchString = searchString;
-    let numberOfPosts = await this.postService.getPostsOfUserLength(this.searchString,this.username);
+    let numberOfPosts = await this.postService.getPostsOfUserLength(this.searchString, this.username);
     this.length = numberOfPosts;
     this.fetchedPages = new Set < number > ();
     this.cachedData = Array.from < Post > ({
@@ -153,7 +155,9 @@ export class UserPostsDataSource extends DataSource < Post | undefined > {
           'content': post.content,
           'author': post.author,
           'created_at': post.created_at,
-          '_id' : post._id
+          '_id': post._id,
+          'hashtags': post.hashtags,
+          'mentions': post.mentions
         });
       }));
     this.dataStream.next(this.cachedData);

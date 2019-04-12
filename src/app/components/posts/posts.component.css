@@ -9,6 +9,10 @@
   height: 150px;
 }
 
-span.author{
-  border:2px solid red;
+span.author {
+  border: 2px solid red;
+}
+
+a.hashtag {
+  color: blue;
 }

@@ -39,6 +39,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { UsersComponent } from './components/users/users.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
+import { NewPostComponent } from './components/new-post/new-post.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { PostDetailsComponent } from './components/post-details/post-details.com
     RegisterComponent,
     UsersComponent,
     UserDetailsComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    NewPostComponent
   ],
   imports: [
     BrowserModule,

@@ -11,52 +11,62 @@ export const USERS: User[] = [
   new User({
     'realName': 'Leonardo Payne',
     'username': 'icefallshampoo',
-    'email': 'brainless@att.net'
+    'email': 'brainless@att.net',
+    'password': '123'
   }),
   new User({
     'realName': 'Carl Henson',
     'username': 'FluffyPug',
-    'email': 'psharpe@msn.com'
+    'email': 'psharpe@msn.com',
+    'password': '123'
   }),
   new User({
     'realName': 'Jensen Combs',
     'username': 'curvymachine',
-    'email': 'pappp@optonline.net'
+    'email': 'pappp@optonline.net',
+    'password': '123'
   }),
   new User({
     'realName': 'Aubrey Guzman',
     'username': 'jobless_star',
-    'email': 'cgcra@hotmail.com'
+    'email': 'cgcra@hotmail.com',
+    'password': '123'
   }),
   new User({
     'realName': 'Alissa Heath',
     'username': 'understood-ring',
-    'email': 'sartak@yahoo.ca'
+    'email': 'sartak@yahoo.ca',
+    'password': '123'
   }),
   new User({
     'realName': 'Julius Patton',
     'username': 'fragile_advertisement',
-    'email': 'sisyphus@att.net'
+    'email': 'sisyphus@att.net',
+    'password': '123'
   }),
   new User({
     'realName': 'Lara Hinton',
     'username': 'adorable-ticket',
-    'email': 'danzigism@att.net'
+    'email': 'danzigism@att.net',
+    'password': '123'
   }),
   new User({
     'realName': 'Katie Baker',
     'username': 'futuristic_canvas',
-    'email': 'lukka@aol.com'
+    'email': 'lukka@aol.com',
+    'password': '123'
   }),
   new User({
     'realName': 'Bethany Yates',
     'username': 'exotic-cakes',
-    'email': 'kmself@verizon.net'
+    'email': 'kmself@verizon.net',
+    'password': '123'
   }),
   new User({
     'realName': 'Damarion Dean',
     'username': 'regular_crime',
-    'email': 'dinther@me.com'
+    'email': 'dinther@me.com',
+    'password': '123'
   })
 ]
 
@@ -206,6 +216,65 @@ export const POSTS: Post[] = [
     'author': USERS[5],
     'created_at': getRandomDate(),
     '_id': 23
+  }),
+  new Post({
+    'content': `The grass is always greener once you don't have to mow a lawn anymore. #grass`,
+    'author': USERS[6],
+    'created_at': getRandomDate(),
+    '_id': 24,
+    'hashtags': ['grass']
+  }),
+  new Post({
+    'content': `Beauty is in the #eye of the beholder and it may be necessary from time to time to give a stupid or misinformed beholder a black eye.`,
+    'author': USERS[6],
+    'created_at': getRandomDate(),
+    '_id': 25,
+    'hashtags': ['eye']
+  }),
+  new Post({
+    'content': `A lie told often enough becomes the truth.`,
+    'author': USERS[6],
+    'created_at': getRandomDate(),
+    '_id': 26
+  }),
+  new Post({
+    'content': `A good name, like good will, is got by many actions and lost by one.`,
+    'author': USERS[6],
+    'created_at': getRandomDate(),
+    '_id': 27
+  }),
+  new Post({
+    'content': `There is some comfort in #dying surrounded by one's children. @understood-ring`,
+    'author': USERS[6],
+    'created_at': getRandomDate(),
+    '_id': 28,
+    'hashtags': ['dying'],
+    'mentions': [new User({
+      'username': 'understood-ring'
+    })]
+  }),
+  new Post({
+    'content': `All movements go too far. @icefallshampoo right?`,
+    'author': USERS[6],
+    'created_at': getRandomDate(),
+    '_id': 29,
+    'mentions': [new User({
+      'username': 'icefallshampoo'
+    })]
+  }),
+  new Post({
+    'content': `Some people like my #advice so much that they frame it upon the #wall instead of using it.`,
+    'author': USERS[6],
+    'created_at': getRandomDate(),
+    '_id': 30,
+    'hashtags': ['advice', 'wall']
+  }),
+  new Post({
+    'content': `A good name, like good will, is got by many actions and lost by #one.`,
+    'author': USERS[6],
+    'created_at': getRandomDate(),
+    '_id': 31,
+    'hashtags': ['one']
   }),
 ];
 
