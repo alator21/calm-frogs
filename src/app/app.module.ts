@@ -40,6 +40,7 @@ import { UsersComponent } from './components/users/users.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
+import { HashtagComponent } from './components/hashtag/hashtag.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NewPostComponent } from './components/new-post/new-post.component';
     UsersComponent,
     UserDetailsComponent,
     PostDetailsComponent,
-    NewPostComponent
+    NewPostComponent,
+    HashtagComponent
   ],
   imports: [
     BrowserModule,

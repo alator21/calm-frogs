@@ -30,6 +30,10 @@ import {
   PostDetailsComponent
 } from './components/post-details/post-details.component';
 
+import {
+  HashtagComponent
+} from './components/hashtag/hashtag.component';
+
 const routes: Routes = [{
     'path': '',
     'component': PostsComponent
@@ -57,6 +61,10 @@ const routes: Routes = [{
   {
     'path': 'posts/post/:postID',
     'component': PostDetailsComponent
+  },
+  {
+    'path': 'hashtag/:hashtag',
+    'component': HashtagComponent
   },
 ];
 

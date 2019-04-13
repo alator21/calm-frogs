@@ -5,6 +5,13 @@ body {
 }
 
 a {
-  color: rgb(36, 184, 171);
+  color: rgb(19, 36, 34);
   text-decoration: none;
+}
+
+
+body{
+  background-image: url('./assets/img2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }

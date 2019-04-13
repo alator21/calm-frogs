@@ -1,23 +1,29 @@
-<app-new-post></app-new-post>
-<cdk-virtual-scroll-viewport itemSize="150" class="example-viewport">
-  <div *cdkVirtualFor="let post of posts" class="example-item">
-    <div *ngIf="post">
-      <p>
-        <a  [innerHTML]="highlightHashtags(post)">
-          <!-- {{post.content || 'Loading...'}} -->
-        </a>
-        
-      </p>
-      <p>
-        <span class='created_at'>
-          {{post.created_at}}
-        </span> &nbsp;&nbsp;
-        By
-        <span class='author'>
-          <a routerLink="/users/user/{{post.author.username}}">{{post.author.realName}}</a>
-        </span>
-      </p>
-      <hr>
-    </div>
+<div class="container">
+  <div class='form'>
+    <app-new-post></app-new-post>
   </div>
-</cdk-virtual-scroll-viewport>
+  <div class="posts">
+    <cdk-virtual-scroll-viewport itemSize="150">
+      <div *cdkVirtualFor="let post of posts" class="example-item">
+        <div *ngIf="post" class='scrollItem'>
+          <p>
+            <a [innerHTML]="highlightHashtagsAndMentions(post)" (click)="goToLink($event)">
+            </a>
+          </p>
+          <p>
+            <span class='created_at'>
+              {{post.created_at}}
+            </span> &nbsp;&nbsp;
+            By
+            <span class='author'>
+              <a routerLink="/users/user/{{post.author.username}}">{{post.author.realName}}</a>
+            </span>
+          </p>
+          <hr>
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+
+
+</div>

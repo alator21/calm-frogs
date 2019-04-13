@@ -1,13 +1,11 @@
-<form class="example-form" autocomplete="off">
+<form autocomplete="off">
   <p>
-    <mat-form-field class="example-full-width">
-      <input type="text" autocomplete="off" matInput placeholder="Content" [(ngModel)]="post.content" name="content">
+    <mat-form-field>
+      <input type="text" autocomplete="off" matInput placeholder="What's happening?" [(ngModel)]="post.content" name="content">
     </mat-form-field>
   </p>
 
   <p>
     <button type='submit' mat-flat-button color="primary" (click)="tweet()">Tweet</button>
   </p>
-
-
 </form>
