@@ -70,6 +70,70 @@ export const USERS: User[] = [
   })
 ]
 
+export const USERFOLLOWS: Object[] = [
+  {
+    'user': USERS[0],
+    'follows': USERS[1]
+  },
+  {
+    'user': USERS[0],
+    'follows': USERS[5]
+  },
+  {
+    'user': USERS[0],
+    'follows': USERS[6]
+  },
+  {
+    'user': USERS[1],
+    'follows': USERS[0]
+  },
+
+  {
+    'user': USERS[1],
+    'follows': USERS[2]
+  },
+  {
+    'user': USERS[1],
+    'follows': USERS[6]
+  },
+  {
+    'user': USERS[2],
+    'follows': USERS[1]
+  },
+  {
+    'user': USERS[2],
+    'follows': USERS[7]
+  },
+  {
+    'user': USERS[3],
+    'follows': USERS[7]
+  },
+
+  {
+    'user': USERS[4],
+    'follows': USERS[1]
+  },
+  {
+    'user': USERS[4],
+    'follows': USERS[2]
+  },
+  {
+    'user': USERS[5],
+    'follows': USERS[2]
+  },
+  {
+    'user': USERS[6],
+    'follows': USERS[1]
+  },
+  {
+    'user': USERS[6],
+    'follows': USERS[0]
+  },
+  {
+    'user': USERS[7],
+    'follows': USERS[3]
+  }
+]
 
 
 export const POSTS: Post[] = [
@@ -245,7 +309,7 @@ export const POSTS: Post[] = [
   }),
   new Post({
     'content': `There is some comfort in #dying surrounded by one's children. @understood-ring`,
-    'author': USERS[6],
+    'author': USERS[7],
     'created_at': getRandomDate(),
     '_id': 28,
     'hashtags': ['dying'],
@@ -255,7 +319,7 @@ export const POSTS: Post[] = [
   }),
   new Post({
     'content': `All movements go too far. @icefallshampoo right?`,
-    'author': USERS[6],
+    'author': USERS[7],
     'created_at': getRandomDate(),
     '_id': 29,
     'mentions': [new User({
@@ -264,19 +328,28 @@ export const POSTS: Post[] = [
   }),
   new Post({
     'content': `Some people like my #advice so much that they frame it upon the #wall instead of using it.`,
-    'author': USERS[6],
+    'author': USERS[7],
     'created_at': getRandomDate(),
     '_id': 30,
     'hashtags': ['advice', 'wall']
   }),
   new Post({
     'content': `A good name, like good will, is got by many actions and lost by #one.`,
-    'author': USERS[6],
+    'author': USERS[7],
     'created_at': getRandomDate(),
     '_id': 31,
     'hashtags': ['one']
   }),
+  new Post({
+    'content': `I live in the present due to the constraints of the Space-Time Continuum. #dying`,
+    'author': USERS[7],
+    'created_at': getRandomDate(),
+    '_id': 32,
+    'hashtags': ['dying']
+  }),
 ];
+
+
 
 
 function getRandomDate(): Date {

@@ -22,12 +22,17 @@ import {
 })
 export class PostDetailsComponent implements OnInit {
   private post: Post;
-
+  private postID:number;
   constructor(private postService: PostService, private router: Router, private route: ActivatedRoute) {}
 
   async ngOnInit() {
-    let postID = parseInt(this.route.snapshot.params['postID']);
-    this.post = await this.postService.getPost(postID);
+    try {
+      this.postID = parseInt(this.route.snapshot.params['postID']);
+      this.post = await this.postService.getPost(this.postID);
+    } catch (e) {
+      console.log(e);
+    }
+
   }
 
 }

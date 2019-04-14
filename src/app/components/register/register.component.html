@@ -1,22 +1,27 @@
-<form class="example-form" autocomplete="off">
-  <p>
-    <mat-form-field class="example-full-width">
-      <input type="text" autocomplete="off" matInput placeholder="Username" [(ngModel)]="user.username" name="username">
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field class="example-full-width">
-      <input type="password" autocomplete="off" matInput placeholder="Password" [(ngModel)]="user.password"
-        name="password">
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field class="example-full-width">
-      <input type="text" autocomplete="off" matInput placeholder="Email" [(ngModel)]="user.email" name="email">
-    </mat-form-field>
-  </p>
+<div class="container">
+  <div class="form">
+    <form class="example-form" autocomplete="off">
+      <p>
+        <mat-form-field class="example-full-width">
+          <input type="text" autocomplete="off" matInput placeholder="Username" [(ngModel)]="user.username"
+            name="username">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="example-full-width">
+          <input type="password" autocomplete="off" matInput placeholder="Password" [(ngModel)]="user.password"
+            name="password">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="example-full-width">
+          <input type="text" autocomplete="off" matInput placeholder="Email" [(ngModel)]="user.email" name="email">
+        </mat-form-field>
+      </p>
 
-  <p>
-    <button type='submit' mat-flat-button color="primary" (click)="register(user)">Register</button>
-  </p>
-</form>
+      <p>
+        <button type='submit' mat-flat-button color="primary" (click)="register(user)">Register</button>
+      </p>
+    </form>
+  </div>
+</div>

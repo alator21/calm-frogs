@@ -1,10 +1,25 @@
-<div class="container">
+<div class="container" *ngIf="!isUserLoggedIn">
+  <div class="warning">
+    You aren't logged in. Log in to see tweets!!
+  </div>
+</div>
+
+<div class="container" *ngIf="isUserLoggedIn && (!posts || (posts && posts.length ===0))">
+  <div class="error">
+    There are no tweets right now.
+  </div>
+</div>
+
+<div class="container" *ngIf="isUserLoggedIn">
   <div class='form'>
     <app-new-post></app-new-post>
   </div>
+</div>
+
+<div class="container" *ngIf="posts && posts.length>0">
   <div class="posts">
     <cdk-virtual-scroll-viewport itemSize="150">
-      <div *cdkVirtualFor="let post of posts" class="example-item">
+      <div *cdkVirtualFor="let post of posts">
         <div *ngIf="post" class='scrollItem'>
           <p>
             <a [innerHTML]="highlightHashtagsAndMentions(post)" (click)="goToLink($event)">
@@ -24,6 +39,4 @@
       </div>
     </cdk-virtual-scroll-viewport>
   </div>
-
-
 </div>

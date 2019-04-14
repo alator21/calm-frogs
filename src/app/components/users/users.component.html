@@ -1,19 +1,36 @@
-<p *ngIf="user">
-  <mat-form-field>
-    <input matInput placeholder="Search by username" [(ngModel)]="user.username" (ngModelChange)="onChange($event)"
-      autocomplete="off">
-  </mat-form-field>
-</p>
-
-
-
-<cdk-virtual-scroll-viewport itemSize="150" class="example-viewport">
-  <div *cdkVirtualFor="let user of users" class="example-item">
-    <div *ngIf="user">
-      <p>
-        <a routerLink="/users/user/{{user.username}}">{{user.username || 'Loading...'}}</a>
-      </p>
-      <hr>
-    </div>
+<div class="container" *ngIf="!user">
+  <div class="error">
+    Something wen't wrong.
   </div>
-</cdk-virtual-scroll-viewport>
+</div>
+
+<div class="container" *ngIf="user">
+  <div class="form">
+    <mat-form-field>
+      <input matInput placeholder="Search by username" [(ngModel)]="user.username" (ngModelChange)="onChange($event)"
+        autocomplete="off">
+    </mat-form-field>
+  </div>
+</div>
+
+
+<div class="container" *ngIf="!users || (users && users.length === 0)">
+  <div class="error">
+    There are not available users.
+  </div>
+</div>
+
+<div class="container" *ngIf="users && users.length>0">
+  <div class="users">
+    <cdk-virtual-scroll-viewport itemSize="150">
+      <div *cdkVirtualFor="let user of users" class='scrollItem'>
+        <div *ngIf="user">
+          <p>
+            <a routerLink="/users/user/{{user.username}}">{{user.username || 'Loading...'}}</a>
+          </p>
+          <hr>
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+</div>

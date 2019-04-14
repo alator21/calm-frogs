@@ -1,37 +1,56 @@
-<div *ngIf="user">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{user.username}}</mat-card-title>
-      <mat-card-subtitle>{{user.realName}}</mat-card-subtitle>
-      <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
-    </mat-card-header>
-  </mat-card>
-
-  <div *ngIf="!posts || (posts && posts.length ===1)">
-    
+<div class="container" *ngIf="!username">
+  <div class="error">
+    There is no user with such username.
   </div>
+</div>
 
+<div class="container" *ngIf="!user">
+  <div class="error">
+    There is no user with username: {{username}}.
+  </div>
+</div>
 
-  <div *ngIf="posts && posts.length>0">
-    <cdk-virtual-scroll-viewport itemSize="150" class="example-viewport">
-      <div *cdkVirtualFor="let post of posts" class="example-item">
-        <div *ngIf="post">
+<div class="container" *ngIf="user">
+  <div>
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar></div>
+        <mat-card-title>{{user.username}}</mat-card-title>
+        <mat-card-subtitle>{{user.realName}}</mat-card-subtitle>
+        <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+</div>
+
+<div class="container" *ngIf="!posts || (posts && posts.length === 0)">
+  <div class="error">
+    There are no tweets right now.
+  </div>
+</div>
+
+<div class="container" *ngIf="posts && posts.length>0">
+  <div class="posts">
+    <cdk-virtual-scroll-viewport itemSize="150">
+      <div *cdkVirtualFor="let post of posts">
+        <div *ngIf="post" class='scrollItem'>
           <p>
-            <a routerLink="/posts/post/{{post._id}}">
-              {{post.content || 'Loading...'}}
+            <a [innerHTML]="highlightHashtagsAndMentions(post)" (click)="goToLink($event)">
             </a>
           </p>
           <p>
             <span class='created_at'>
               {{post.created_at}}
             </span> &nbsp;&nbsp;
+            By
+            <span>
+              <a (click)="goToLink($event)" attr.data-link="/users/user/{{post.author.username}}"
+                class='author'>{{post.author.realName}}</a>
+            </span>
           </p>
           <hr>
         </div>
       </div>
     </cdk-virtual-scroll-viewport>
   </div>
-
-
 </div>

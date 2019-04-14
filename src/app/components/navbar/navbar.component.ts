@@ -33,14 +33,26 @@ export class NavbarComponent implements OnInit {
 
   async updateNavbar() {
     this.isLoggedIn = this.authService.isUserLoggedIn();
-    if (this.isLoggedIn){
+    if (this.isLoggedIn) {
       this.user = await this.authService.getTHEUser();
-    }    
+    }
   }
 
   logout() {
     this.authService.logout();
     window.location.href = '/';
+  }
+
+  goToLink(event) {
+    let route = event.target.getAttribute('data-link');
+    if (route) {
+      this.router.navigateByUrl(route);
+      this.router.navigateByUrl('/', {
+        skipLocationChange: true
+      }).then(() => {
+        this.router.navigateByUrl(route);
+      });
+    }
   }
 
 }

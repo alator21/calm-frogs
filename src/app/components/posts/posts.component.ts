@@ -7,6 +7,9 @@ import {
   PostService,
 } from '../../services/post.service';
 import {
+  UserService,
+} from '../../services/user.service';
+import {
   DomSanitizer
 } from '@angular/platform-browser';
 import {
@@ -20,6 +23,12 @@ import {
 import {
   Post
 } from '../../models/post';
+import {
+  User
+} from '../../models/user';
+import {
+  AuthService
+} from '../../services/auth.service';
 
 @Component({
   selector: 'app-posts',
@@ -29,12 +38,20 @@ import {
 })
 export class PostsComponent implements OnInit {
   private posts: AllPostsDataSource;
-  constructor(private router: Router, private sanitizer: DomSanitizer, private postService: PostService) {}
+  private user: User;
+  private isUserLoggedIn: Boolean;
+  constructor(private authService: AuthService, private router: Router, private sanitizer: DomSanitizer, private postService: PostService) {}
 
   async ngOnInit() {
-    let searchString = '';
-    let howManyPosts = await this.postService.getPostsLength(searchString);
-    this.posts = new AllPostsDataSource(this.postService, howManyPosts, searchString);
+    try {
+      this.isUserLoggedIn = await this.authService.isUserLoggedIn();
+      let searchString = '';
+      this.user = await this.authService.getTHEUser();
+      let howManyPosts = await this.postService.getPostsLengthFromUsersIFollow(searchString, this.user.username);
+      this.posts = new AllPostsDataSource(this.postService, howManyPosts, searchString, this.user.username);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   highlightHashtagsAndMentions(post: Post) {
@@ -44,7 +61,7 @@ export class PostsComponent implements OnInit {
       t = t.replace(pattern, `<a class='hashtag' data-link='/hashtag/${h}'>$1</a>`);
     }
 
-    for (let m of post.mentions){
+    for (let m of post.mentions) {
       let username = m.username;
       let pattern = new RegExp('(@' + username + ')', 'gi');
       t = t.replace(pattern, `<a class='mention' data-link='/users/user/${username}'>$1</a>`);
@@ -57,7 +74,7 @@ export class PostsComponent implements OnInit {
 
   goToLink(event) {
     let route = event.target.getAttribute('data-link');
-    if (route){
+    if (route) {
       this.router.navigateByUrl(route);
     }
   }
