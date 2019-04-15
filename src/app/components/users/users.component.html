@@ -26,7 +26,7 @@
       <div *cdkVirtualFor="let user of users" class='scrollItem'>
         <div *ngIf="user">
           <p>
-            <a routerLink="/users/user/{{user.username}}">{{user.username || 'Loading...'}}</a>
+            <a routerLink="/users/user/{{user.username}}" class='author'>{{user.username || 'Loading...'}}</a>
           </p>
           <hr>
         </div>

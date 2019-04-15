@@ -11,7 +11,8 @@ import {
 } from '../models/user';
 
 import {
-  of
+  of ,
+  Subject
 } from 'rxjs';
 
 
@@ -21,6 +22,8 @@ import {
 export class AuthService {
   users: User[] = USERS;
   userIndex: number;
+  private navStateSource = new Subject < any > ();
+  navState$ = this.navStateSource.asObservable();
   constructor() {}
 
 
@@ -64,5 +67,9 @@ export class AuthService {
     let email = user.email;
     let registerResult = false;
     return of(registerResult).toPromise();
+  }
+
+  setNavBarState(state) {
+    this.navStateSource.next(state);
   }
 }

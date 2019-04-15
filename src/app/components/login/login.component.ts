@@ -30,7 +30,11 @@ export class LoginComponent implements OnInit {
     try {
       let correctDetails = await this.authService.login(user);
       if (correctDetails) {
-        window.location.href = '/';
+        this.authService.setNavBarState({
+          username: user.username,
+          'isLoggedIn': true
+        });
+        this.router.navigateByUrl('/');
       } else {
         console.log('Wrong username/password');
       }

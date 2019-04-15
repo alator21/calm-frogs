@@ -98,7 +98,7 @@ a.hashtag {
   color: blue;
 }
 
-a.mention {
+a.mention,a.author {
   color: red;
 }
 
@@ -107,3 +107,4 @@ a.hashtag,
 a.author {
   cursor: pointer;
 }
+

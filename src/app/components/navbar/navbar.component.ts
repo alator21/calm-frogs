@@ -25,7 +25,12 @@ import {
 export class NavbarComponent implements OnInit {
   private user: User = new User();
   private isLoggedIn: Boolean;
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+    this.authService.navState$.subscribe((state) => {
+      this.user.username = state.username;
+      this.isLoggedIn = state.isLoggedIn;
+    })
+  }
 
   async ngOnInit() {
     await this.updateNavbar()
@@ -40,7 +45,11 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    window.location.href = '/';
+    this.authService.setNavBarState({
+      username: '',
+      'isLoggedIn': false
+    });
+    this.router.navigateByUrl('/login');
   }
 
   goToLink(event) {
