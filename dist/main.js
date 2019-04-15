@@ -258,7 +258,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!posts || (posts && posts.length ===0)\">\n  <div class=\"error\">\n    There are no tweets with hashtag #{{hashtag}}\n  </div>\n</div>\n<div class=\"container\" *ngIf=\"hashtag && posts && posts.length>0\">\n  <div class=\"title\">\n    All tweets with hashtag #{{hashtag}}\n  </div>\n  <div class=\"posts\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let post of posts\">\n        <div *ngIf=\"post\" class='scrollItem'>\n          <p>\n            <a [innerHTML]=\"highlightHashtagsAndMentions(post)\" (click)=\"goToLink($event)\">\n            </a>\n          </p>\n          <p>\n            <span class='created_at'>\n              {{post.created_at}}\n            </span> &nbsp;&nbsp;\n            By\n            <span class='author'>\n              <a routerLink=\"/users/user/{{post.author.username}}\">{{post.author.realName}}</a>\n            </span>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\" *ngIf=\"!posts || (posts && posts.length ===0)\">\n  <div class=\"error\">\n    There are no tweets with hashtag #{{hashtag}}\n  </div>\n</div>\n<div class=\"container\" *ngIf=\"hashtag && posts && posts.length>0\">\n  <div class=\"title\">\n    All tweets with hashtag #{{hashtag}}\n  </div>\n  <div class=\"posts\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let post of posts\">\n        <div *ngIf=\"post\" class='scrollItem'>\n          <p>\n            <a [innerHTML]=\"highlightHashtagsAndMentions(post)\" (click)=\"goToLink($event)\">\n            </a>\n          </p>\n          <p>\n            <span class='created_at'>\n              {{post.created_at}}\n            </span> &nbsp;&nbsp;\n            By\n              <a class='author' routerLink=\"/users/user/{{post.author.username}}\">{{post.author.realName}}</a>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -369,7 +369,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"form\">\n    <form autocomplete=\"off\">\n      <p>\n        <mat-form-field >\n          <input type=\"text\" autocomplete=\"off\" matInput placeholder=\"Username\" [(ngModel)]=\"user.username\"\n            name=\"username\">\n        </mat-form-field>\n      </p>\n      <p>\n        <mat-form-field>\n          <input type=\"password\" autocomplete=\"off\" matInput placeholder=\"Password\" [(ngModel)]=\"user.password\"\n            name=\"password\">\n        </mat-form-field>\n      </p>\n      <p>\n        <button type='submit' mat-flat-button color=\"primary\" (click)=\"login(user)\">Login</button>\n      </p>\n    </form>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <div class=\"form\">\n    <form autocomplete=\"off\">\n      <p>\n        <mat-form-field>\n          <input type=\"text\" autocomplete=\"off\" matInput placeholder=\"Username\" [(ngModel)]=\"user.username\"\n            name=\"username\">\n        </mat-form-field>\n      </p>\n      <p>\n        <mat-form-field>\n          <input type=\"password\" autocomplete=\"off\" matInput placeholder=\"Password\" [(ngModel)]=\"user.password\"\n            name=\"password\">\n        </mat-form-field>\n      </p>\n      <button type='button' mat-flat-button color=\"primary\" (click)=\"login(user)\">Login</button>\n    </form>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -412,7 +412,11 @@ var LoginComponent = /** @class */ (function () {
                     case 1:
                         correctDetails = _a.sent();
                         if (correctDetails) {
-                            window.location.href = '/';
+                            this.authService.setNavBarState({
+                                username: user.username,
+                                'isLoggedIn': true
+                            });
+                            this.router.navigateByUrl('/');
                         }
                         else {
                             console.log('Wrong username/password');
@@ -486,9 +490,14 @@ __webpack_require__.r(__webpack_exports__);
 
 var NavbarComponent = /** @class */ (function () {
     function NavbarComponent(router, authService) {
+        var _this = this;
         this.router = router;
         this.authService = authService;
         this.user = new _models_user__WEBPACK_IMPORTED_MODULE_2__["User"]();
+        this.authService.navState$.subscribe(function (state) {
+            _this.user.username = state.username;
+            _this.isLoggedIn = state.isLoggedIn;
+        });
     }
     NavbarComponent.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -522,7 +531,11 @@ var NavbarComponent = /** @class */ (function () {
     };
     NavbarComponent.prototype.logout = function () {
         this.authService.logout();
-        window.location.href = '/';
+        this.authService.setNavBarState({
+            username: '',
+            'isLoggedIn': false
+        });
+        this.router.navigateByUrl('/login');
     };
     NavbarComponent.prototype.goToLink = function (event) {
         var _this = this;
@@ -1043,7 +1056,7 @@ module.exports = ".example-viewport {\n  text-align: center;\n  height: 60vh;\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    Something wen't wrong.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div class=\"form\">\n    <mat-form-field>\n      <input matInput placeholder=\"Search by username\" [(ngModel)]=\"user.username\" (ngModelChange)=\"onChange($event)\"\n        autocomplete=\"off\">\n    </mat-form-field>\n  </div>\n</div>\n\n\n<div class=\"container\" *ngIf=\"!users || (users && users.length === 0)\">\n  <div class=\"error\">\n    There are not available users.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"users && users.length>0\">\n  <div class=\"users\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let user of users\" class='scrollItem'>\n        <div *ngIf=\"user\">\n          <p>\n            <a routerLink=\"/users/user/{{user.username}}\">{{user.username || 'Loading...'}}</a>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    Something wen't wrong.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div class=\"form\">\n    <mat-form-field>\n      <input matInput placeholder=\"Search by username\" [(ngModel)]=\"user.username\" (ngModelChange)=\"onChange($event)\"\n        autocomplete=\"off\">\n    </mat-form-field>\n  </div>\n</div>\n\n\n<div class=\"container\" *ngIf=\"!users || (users && users.length === 0)\">\n  <div class=\"error\">\n    There are not available users.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"users && users.length>0\">\n  <div class=\"users\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let user of users\" class='scrollItem'>\n        <div *ngIf=\"user\">\n          <p>\n            <a routerLink=\"/users/user/{{user.username}}\" class='author'>{{user.username || 'Loading...'}}</a>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -2070,6 +2083,8 @@ __webpack_require__.r(__webpack_exports__);
 var AuthService = /** @class */ (function () {
     function AuthService() {
         this.users = _mock_data__WEBPACK_IMPORTED_MODULE_2__["USERS"];
+        this.navStateSource = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+        this.navState$ = this.navStateSource.asObservable();
     }
     AuthService.prototype.login = function (user) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
@@ -2122,6 +2137,9 @@ var AuthService = /** @class */ (function () {
                 return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(registerResult).toPromise()];
             });
         });
+    };
+    AuthService.prototype.setNavBarState = function (state) {
+        this.navStateSource.next(state);
     };
     AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
