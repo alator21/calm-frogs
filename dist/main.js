@@ -931,7 +931,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!username\">\n  <div class=\"error\">\n    There is no user with such username.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    There is no user with username: {{username}}.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div>\n    <mat-card>\n      <mat-card-header>\n        <div mat-card-avatar></div>\n        <mat-card-title>{{user.username}}</mat-card-title>\n        <mat-card-subtitle>{{user.realName}}</mat-card-subtitle>\n        <mat-card-subtitle>{{user.email}}</mat-card-subtitle>\n      </mat-card-header>\n    </mat-card>\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"!posts || (posts && posts.length === 0)\">\n  <div class=\"error\">\n    There are no tweets right now.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"posts && posts.length>0\">\n  <div class=\"posts\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let post of posts\">\n        <div *ngIf=\"post\" class='scrollItem'>\n          <p>\n            <a [innerHTML]=\"highlightHashtagsAndMentions(post)\" (click)=\"goToLink($event)\">\n            </a>\n          </p>\n          <p>\n            <span class='created_at'>\n              {{post.created_at}}\n            </span> &nbsp;&nbsp;\n            By\n            <span>\n              <a (click)=\"goToLink($event)\" attr.data-link=\"/users/user/{{post.author.username}}\"\n                class='author'>{{post.author.realName}}</a>\n            </span>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\" *ngIf=\"!username\">\n  <div class=\"error\">\n    There is no user with such username.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    There is no user with username: {{username}}.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div>\n    <mat-card>\n      <mat-card-header>\n        <div mat-card-avatar></div>\n        <mat-card-title>{{user.username}}</mat-card-title>\n        <mat-card-subtitle>{{user.realName}}</mat-card-subtitle>\n        <mat-card-subtitle>{{user.email}}</mat-card-subtitle>\n        <mat-card-subtitle *ngIf=\"iFollowHim === 'true' \"><button mat-flat-button color=\"primary\">Unfollow</button></mat-card-subtitle>\n        <mat-card-subtitle *ngIf=\"iFollowHim === 'false' \"><button mat-flat-button color=\"primary\">Follow</button></mat-card-subtitle>\n        <mat-card-subtitle *ngIf=\"iFollowHim === 'mine' \"><button mat-flat-button color=\"primary\">Edit</button></mat-card-subtitle>\n      </mat-card-header>\n    </mat-card>\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"!posts || (posts && posts.length === 0)\">\n  <div class=\"error\">\n    There are no tweets right now.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"posts && posts.length>0\">\n  <div class=\"posts\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let post of posts\">\n        <div *ngIf=\"post\" class='scrollItem'>\n          <p>\n            <a [innerHTML]=\"highlightHashtagsAndMentions(post)\" (click)=\"goToLink($event)\">\n            </a>\n          </p>\n          <p>\n            <span class='created_at'>\n              {{post.created_at}}\n            </span> &nbsp;&nbsp;\n            By\n            <span>\n              <a (click)=\"goToLink($event)\" attr.data-link=\"/users/user/{{post.author.username}}\"\n                class='author'>{{post.author.realName}}</a>\n            </span>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -966,27 +966,29 @@ var UserDetailsComponent = /** @class */ (function () {
         this.route = route;
         this.userService = userService;
         this.postService = postService;
+        this.iFollowHim = "";
     }
     UserDetailsComponent.prototype.ngOnInit = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var _a, searchString, numberOfPosts, e_1;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
-                switch (_b.label) {
+            var d, searchString, numberOfPosts, e_1;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 3, , 4]);
+                        _a.trys.push([0, 3, , 4]);
                         this.username = this.route.snapshot.params['username'];
-                        _a = this;
                         return [4 /*yield*/, this.userService.getUser(this.username)];
                     case 1:
-                        _a.user = _b.sent();
+                        d = _a.sent();
+                        this.user = d.user;
+                        this.iFollowHim = d.iFollowHim;
                         searchString = '';
                         return [4 /*yield*/, this.postService.getPostsOfUserLength(searchString, this.username)];
                     case 2:
-                        numberOfPosts = _b.sent();
+                        numberOfPosts = _a.sent();
                         this.posts = new _dataSources_post_data_source__WEBPACK_IMPORTED_MODULE_6__["UserPostsDataSource"](this.postService, numberOfPosts, this.username, searchString);
                         return [3 /*break*/, 4];
                     case 3:
-                        e_1 = _b.sent();
+                        e_1 = _a.sent();
                         console.log(e_1);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
@@ -1056,7 +1058,7 @@ module.exports = ".example-viewport {\n  text-align: center;\n  height: 60vh;\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    Something wen't wrong.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div class=\"form\">\n    <mat-form-field>\n      <input matInput placeholder=\"Search by username\" [(ngModel)]=\"user.username\" (ngModelChange)=\"onChange($event)\"\n        autocomplete=\"off\">\n    </mat-form-field>\n  </div>\n</div>\n\n\n<div class=\"container\" *ngIf=\"!users || (users && users.length === 0)\">\n  <div class=\"error\">\n    There are not available users.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"users && users.length>0\">\n  <div class=\"users\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let user of users\" class='scrollItem'>\n        <div *ngIf=\"user\">\n          <p>\n            <a routerLink=\"/users/user/{{user.username}}\" class='author'>{{user.username || 'Loading...'}}</a>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    Something wen't wrong.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div class=\"form\">\n    <mat-form-field>\n      <input matInput placeholder=\"Search by username\" [(ngModel)]=\"user.username\" (ngModelChange)=\"onChange($event)\"\n        autocomplete=\"off\">\n    </mat-form-field>\n  </div>\n</div>\n\n\n<div class=\"container\"\n  *ngIf=\"!usersAndFollowStatus || (usersAndFollowStatus[0] && usersAndFollowStatus[0].length === 0)\">\n  <div class=\"error\">\n    There are not available users.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"usersAndFollowStatus && usersAndFollowStatus.length>0\">\n  <div class=\"users\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let d of usersAndFollowStatus\" class='scrollItem'>\n        <div *ngIf=\"user\">\n          <p>\n            <a routerLink=\"/users/user/{{d[0].username}}\" class='author'>{{d[0].username || 'Loading...'}}</a>\n            |\n            <span *ngIf=\"d[1] ==='true'\">\n              <button mat-flat-button color=\"primary\">Unfollow</button>\n            </span>\n            <span *ngIf=\"d[1] === 'false'\">\n              <button mat-flat-button color=\"primary\">Follow</button>\n            </span>\n            <span *ngIf=\"d[1] === 'mine'\">\n              <button mat-flat-button color=\"primary\">Mine</button>\n            </span>\n          </p>\n\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1094,7 +1096,7 @@ var UsersComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.userService.getNumberOfUsers(username)];
                     case 1:
                         howManyUsers = _a.sent();
-                        this.users = new _dataSources_user_data_source__WEBPACK_IMPORTED_MODULE_3__["AllUsersDataSource"](this.userService, howManyUsers);
+                        this.usersAndFollowStatus = new _dataSources_user_data_source__WEBPACK_IMPORTED_MODULE_3__["AllUsersDataSource"](this.userService, howManyUsers);
                         this.user = new _models_user__WEBPACK_IMPORTED_MODULE_4__["User"]();
                         return [2 /*return*/];
                 }
@@ -1105,7 +1107,7 @@ var UsersComponent = /** @class */ (function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.users.search(username)];
+                    case 0: return [4 /*yield*/, this.usersAndFollowStatus.search(username)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -1578,11 +1580,11 @@ var AllUsersDataSource = /** @class */ (function (_super) {
                         (_a = this.cachedData).splice.apply(_a, [page * this.pageSize, this.pageSize].concat(Array.from({
                             length: d.length
                         }).map(function (_, i) {
-                            return new _models_user__WEBPACK_IMPORTED_MODULE_3__["User"]({
-                                'username': d[i].username,
-                                'email': d[i].email,
-                                'realName': d[i].realName
-                            });
+                            return [new _models_user__WEBPACK_IMPORTED_MODULE_3__["User"]({
+                                    'username': d[i].e.username,
+                                    'email': d[i].e.email,
+                                    'realName': d[i].e.realName
+                                }), d[i].iFollowHim];
                         })));
                         this.dataStream.next(this.cachedData);
                         return [2 /*return*/];
@@ -2075,7 +2077,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _mock_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mock-data */ "./src/app/mock-data.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../models/user */ "./src/app/models/user.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
 
 
 
@@ -2083,7 +2087,7 @@ __webpack_require__.r(__webpack_exports__);
 var AuthService = /** @class */ (function () {
     function AuthService() {
         this.users = _mock_data__WEBPACK_IMPORTED_MODULE_2__["USERS"];
-        this.navStateSource = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+        this.navStateSource = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
         this.navState$ = this.navStateSource.asObservable();
     }
     AuthService.prototype.login = function (user) {
@@ -2121,8 +2125,11 @@ var AuthService = /** @class */ (function () {
             var randomUser;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 this.userIndex = parseInt(localStorage.getItem('userIndex'));
+                if (this.userIndex === -1) {
+                    return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(new _models_user__WEBPACK_IMPORTED_MODULE_3__["User"]()).toPromise()];
+                }
                 randomUser = _mock_data__WEBPACK_IMPORTED_MODULE_2__["USERS"][this.userIndex];
-                return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(randomUser).toPromise()];
+                return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(randomUser).toPromise()];
             });
         });
     };
@@ -2134,7 +2141,7 @@ var AuthService = /** @class */ (function () {
                 password = user.password;
                 email = user.email;
                 registerResult = false;
-                return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(registerResult).toPromise()];
+                return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(registerResult).toPromise()];
             });
         });
     };
@@ -2381,12 +2388,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _mock_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mock-data */ "./src/app/mock-data.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./auth.service */ "./src/app/services/auth.service.ts");
+
 
 
 
 
 var UserService = /** @class */ (function () {
-    function UserService() {
+    function UserService(authService) {
+        this.authService = authService;
         this.users = _mock_data__WEBPACK_IMPORTED_MODULE_2__["USERS"];
     }
     UserService.prototype.getUsers = function (limit, page) {
@@ -2398,17 +2408,40 @@ var UserService = /** @class */ (function () {
     };
     UserService.prototype.getUsersWithUsername = function (username, limit, page) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var users$, pattern;
+            var users$, myUser, pattern, ret;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                users$ = this.users.slice();
-                if (!username) {
-                    username = '';
+                switch (_a.label) {
+                    case 0:
+                        users$ = this.users.slice();
+                        return [4 /*yield*/, this.authService.getTHEUser()];
+                    case 1:
+                        myUser = _a.sent();
+                        if (!username) {
+                            username = '';
+                        }
+                        pattern = new RegExp(".*" + username + ".*", 'gi');
+                        ret = users$.filter(function (e) {
+                            return e.username.match(pattern);
+                        }).map(function (e) {
+                            var iFollowHim = "false";
+                            for (var i = 0; i < _mock_data__WEBPACK_IMPORTED_MODULE_2__["USERFOLLOWS"].length; i++) {
+                                if (_mock_data__WEBPACK_IMPORTED_MODULE_2__["USERFOLLOWS"][i].user.username === myUser.username) {
+                                    if (_mock_data__WEBPACK_IMPORTED_MODULE_2__["USERFOLLOWS"][i].follows.username === e.username) {
+                                        iFollowHim = "true";
+                                        break;
+                                    }
+                                }
+                            }
+                            if (myUser.username === e.username) {
+                                iFollowHim = 'mine';
+                            }
+                            return {
+                                e: e,
+                                iFollowHim: iFollowHim
+                            };
+                        });
+                        return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(ret.slice(limit * page, limit * page + limit)).toPromise()];
                 }
-                pattern = new RegExp(".*" + username + ".*", 'gi');
-                users$ = users$.filter(function (e) {
-                    return e.username.match(pattern);
-                });
-                return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(users$.slice(limit * page, limit * page + limit)).toPromise()];
             });
         });
     };
@@ -2430,10 +2463,30 @@ var UserService = /** @class */ (function () {
     };
     UserService.prototype.getUser = function (username) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var myUser, user, iFollowHim, i;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(this.users.find(function (e) {
-                        return e.username === username;
-                    })).toPromise()];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.authService.getTHEUser()];
+                    case 1:
+                        myUser = _a.sent();
+                        user = this.users.find(function (e) { return e.username === username; });
+                        iFollowHim = "false";
+                        for (i = 0; i < _mock_data__WEBPACK_IMPORTED_MODULE_2__["USERFOLLOWS"].length; i++) {
+                            if (_mock_data__WEBPACK_IMPORTED_MODULE_2__["USERFOLLOWS"][i].user.username === myUser.username) {
+                                if (_mock_data__WEBPACK_IMPORTED_MODULE_2__["USERFOLLOWS"][i].follows.username === user.username) {
+                                    iFollowHim = "true";
+                                    break;
+                                }
+                            }
+                        }
+                        if (myUser.username === username) {
+                            iFollowHim = "mine";
+                        }
+                        return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+                                user: user,
+                                iFollowHim: iFollowHim
+                            }).toPromise()];
+                }
             });
         });
     };
@@ -2441,7 +2494,7 @@ var UserService = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
             providedIn: 'root'
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]])
     ], UserService);
     return UserService;
 }());
