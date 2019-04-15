@@ -30,13 +30,13 @@
             <a routerLink="/users/user/{{d[0].username}}" class='author'>{{d[0].username || 'Loading...'}}</a>
             |
             <span *ngIf="d[1] ==='true'">
-              <button mat-flat-button color="primary">Unfollow</button>
+              <button mat-flat-button color="primary" (click)="unfollow(d[0])">Unfollow</button>
             </span>
             <span *ngIf="d[1] === 'false'">
-              <button mat-flat-button color="primary">Follow</button>
+              <button mat-flat-button color="primary" (click)="follow(d[0])">Follow</button>
             </span>
             <span *ngIf="d[1] === 'mine'">
-              <button mat-flat-button color="primary">Mine</button>
+              <button mat-flat-button color="primary"  disabled>Mine</button>
             </span>
           </p>
 

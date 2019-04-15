@@ -7,6 +7,10 @@ import {
 } from '../../services/user.service';
 
 import {
+  FollowService
+} from '../../services/follow.service';
+
+import {
   AllUsersDataSource
 } from '../../dataSources/user-data-source';
 import {
@@ -21,7 +25,7 @@ import {
 export class UsersComponent implements OnInit {
   private usersAndFollowStatus: AllUsersDataSource;
   private user: User;
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,private followService:FollowService) {}
 
   async ngOnInit() {
     let username = '';
@@ -32,6 +36,25 @@ export class UsersComponent implements OnInit {
 
   async onChange(username: string) {
     await this.usersAndFollowStatus.search(username);
+  }
+
+  async follow(user){
+    try{
+      let d = await this.followService.follow(user);
+      alert('You followed him succesfully.');
+    }catch(e){
+
+    }
+    
+  }
+
+  async unfollow(user){
+    try{
+      let d = await this.followService.unfollow(user);
+      alert('You unfollowed him succesfully.');
+    }catch(e){
+
+    }
   }
 
 }
