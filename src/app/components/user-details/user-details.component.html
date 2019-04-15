@@ -18,6 +18,9 @@
         <mat-card-title>{{user.username}}</mat-card-title>
         <mat-card-subtitle>{{user.realName}}</mat-card-subtitle>
         <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="iFollowHim === 'true' "><button mat-flat-button color="primary">Unfollow</button></mat-card-subtitle>
+        <mat-card-subtitle *ngIf="iFollowHim === 'false' "><button mat-flat-button color="primary">Follow</button></mat-card-subtitle>
+        <mat-card-subtitle *ngIf="iFollowHim === 'mine' "><button mat-flat-button color="primary">Edit</button></mat-card-subtitle>
       </mat-card-header>
     </mat-card>
   </div>

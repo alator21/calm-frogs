@@ -40,16 +40,18 @@ import {
 export class UserDetailsComponent implements OnInit {
   private user: User;
   private username: string;
+  private iFollowHim = "";
   private posts: UserPostsDataSource;
   constructor(private sanitizer: DomSanitizer, private router: Router, private route: ActivatedRoute, private userService: UserService, private postService: PostService) {}
 
   async ngOnInit() {
     try {
       this.username = this.route.snapshot.params['username'];
-      this.user = await this.userService.getUser(this.username);
+      let d = await this.userService.getUser(this.username);
+      this.user = d.user;
+      this.iFollowHim = d.iFollowHim;
       let searchString = '';
       let numberOfPosts = await this.postService.getPostsOfUserLength(searchString, this.username);
-
       this.posts = new UserPostsDataSource(this.postService, numberOfPosts, this.username, searchString);
     } catch (e) {
       console.log(e);

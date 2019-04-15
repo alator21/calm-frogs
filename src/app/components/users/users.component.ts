@@ -19,19 +19,19 @@ import {
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  private users: AllUsersDataSource;
+  private usersAndFollowStatus: AllUsersDataSource;
   private user: User;
   constructor(private userService: UserService) {}
 
   async ngOnInit() {
     let username = '';
     let howManyUsers = await this.userService.getNumberOfUsers(username);
-    this.users = new AllUsersDataSource(this.userService, howManyUsers);
+    this.usersAndFollowStatus = new AllUsersDataSource(this.userService, howManyUsers);
     this.user = new User();
   }
 
   async onChange(username: string) {
-    await this.users.search(username);
+    await this.usersAndFollowStatus.search(username);
   }
 
 }

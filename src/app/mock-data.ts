@@ -70,7 +70,7 @@ export const USERS: User[] = [
   })
 ]
 
-export const USERFOLLOWS: Object[] = [
+export const USERFOLLOWS: any = [
   {
     'user': USERS[0],
     'follows': USERS[1]

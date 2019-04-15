@@ -2,7 +2,8 @@ import {
   Injectable
 } from '@angular/core';
 import {
-  USERS
+  USERS,
+  USERFOLLOWS
 } from '../mock-data';
 
 import {
@@ -12,28 +13,52 @@ import {
 import {
   User
 } from '../models/user';
+
+import {
+  AuthService
+} from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private users: User[] = USERS;
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
 
   async getUsers(limit: number, page: number): Promise < User[] > {
     return of(this.users.slice(limit * page, limit * page + limit)).toPromise();
   }
 
-  async getUsersWithUsername(username: string, limit: number, page: number): Promise < User[] > {
+  async getUsersWithUsername(username: string, limit: number, page: number): Promise < any > {
     let users$ = [...this.users];
+    let myUser = await this.authService.getTHEUser();
     if (!username) {
       username = '';
     }
     let pattern = new RegExp(`.*${username}.*`, 'gi')
-    users$ = users$.filter((e) => {
+    let ret = users$.filter((e) => {
       return e.username.match(pattern);
-    })
-    return of(users$.slice(limit * page, limit * page + limit)).toPromise();
+    }).map((e) => {
+      let iFollowHim = "false";
+      for (let i = 0; i < USERFOLLOWS.length; i++) {
+        if (USERFOLLOWS[i].user.username === myUser.username) {
+          if (USERFOLLOWS[i].follows.username === e.username) {
+            iFollowHim = "true";
+            break;
+          }
+        }
+      }
+
+      if (myUser.username === e.username) {
+        iFollowHim = 'mine';
+      }
+
+      return {
+        e,
+        iFollowHim
+      };
+    });
+    return of(ret.slice(limit * page, limit * page + limit)).toPromise();
   }
 
   async getNumberOfUsers(username: string): Promise < number > {
@@ -48,9 +73,25 @@ export class UserService {
     return of(users$.length).toPromise();
   }
 
-  async getUser(username: string): Promise < User > {
-    return of(this.users.find((e) => {
-      return e.username === username;
-    })).toPromise();
+  async getUser(username: string): Promise < any > {
+    let myUser = await this.authService.getTHEUser();
+    let user = this.users.find((e) => e.username === username);
+    let iFollowHim = "false";
+    for (let i = 0; i < USERFOLLOWS.length; i++) {
+      if (USERFOLLOWS[i].user.username === myUser.username) {
+        if (USERFOLLOWS[i].follows.username === user.username) {
+          iFollowHim = "true"
+          break;
+        }
+      }
+    }
+    if (myUser.username === username) {
+      iFollowHim = "mine";
+    }
+    return of({
+      user,
+      iFollowHim
+    }).toPromise();
+
   }
 }

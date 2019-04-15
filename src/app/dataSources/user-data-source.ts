@@ -73,11 +73,11 @@ export class AllUsersDataSource extends DataSource < User | undefined > {
       ...Array.from < User > ({
         length: d.length
       }).map((_, i) => {
-        return new User({
-          'username': d[i].username,
-          'email': d[i].email,
-          'realName': d[i].realName
-        });
+        return [new User({
+          'username': d[i].e.username,
+          'email': d[i].e.email,
+          'realName': d[i].e.realName
+        }),d[i].iFollowHim];
       }));
     this.dataStream.next(this.cachedData);
   }

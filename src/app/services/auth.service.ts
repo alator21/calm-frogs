@@ -57,6 +57,9 @@ export class AuthService {
 
   async getTHEUser(): Promise < any > {
     this.userIndex = parseInt(localStorage.getItem('userIndex'));
+    if (this.userIndex === -1) {
+      return of(new User()).toPromise()
+    }
     let randomUser = USERS[this.userIndex];
     return of(randomUser).toPromise();
   }

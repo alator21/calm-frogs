@@ -14,20 +14,32 @@
 </div>
 
 
-<div class="container" *ngIf="!users || (users && users.length === 0)">
+<div class="container"
+  *ngIf="!usersAndFollowStatus || (usersAndFollowStatus[0] && usersAndFollowStatus[0].length === 0)">
   <div class="error">
     There are not available users.
   </div>
 </div>
 
-<div class="container" *ngIf="users && users.length>0">
+<div class="container" *ngIf="usersAndFollowStatus && usersAndFollowStatus.length>0">
   <div class="users">
     <cdk-virtual-scroll-viewport itemSize="150">
-      <div *cdkVirtualFor="let user of users" class='scrollItem'>
+      <div *cdkVirtualFor="let d of usersAndFollowStatus" class='scrollItem'>
         <div *ngIf="user">
           <p>
-            <a routerLink="/users/user/{{user.username}}" class='author'>{{user.username || 'Loading...'}}</a>
+            <a routerLink="/users/user/{{d[0].username}}" class='author'>{{d[0].username || 'Loading...'}}</a>
+            |
+            <span *ngIf="d[1] ==='true'">
+              <button mat-flat-button color="primary">Unfollow</button>
+            </span>
+            <span *ngIf="d[1] === 'false'">
+              <button mat-flat-button color="primary">Follow</button>
+            </span>
+            <span *ngIf="d[1] === 'mine'">
+              <button mat-flat-button color="primary">Mine</button>
+            </span>
           </p>
+
           <hr>
         </div>
       </div>
