@@ -36,7 +36,7 @@
               <button mat-flat-button color="primary" (click)="follow(d[0])">Follow</button>
             </span>
             <span *ngIf="d[1] === 'mine'">
-              <button mat-flat-button color="primary"  disabled>Mine</button>
+              <button mat-flat-button color="primary" routerLink="/users/edit">Edit profile</button>
             </span>
           </p>
 

@@ -48,6 +48,17 @@ export class AllUsersDataSource extends DataSource < User | undefined > {
     this.subscription.unsubscribe();
   }
 
+  async changeUserFollowStatus(user,status) {
+    for (let d of this.cachedData) {
+      if (d) {
+        if (user.username === d[0].username) {
+          d[1] = status;
+          break;
+        }
+      }
+    }
+  }
+
   async search(username: string) {
     this.searchString = username;
     let numberOfUsers = await this.userService.getNumberOfUsers(this.searchString);
@@ -77,7 +88,7 @@ export class AllUsersDataSource extends DataSource < User | undefined > {
           'username': d[i].e.username,
           'email': d[i].e.email,
           'realName': d[i].e.realName
-        }),d[i].iFollowHim];
+        }), d[i].iFollowHim];
       }));
     this.dataStream.next(this.cachedData);
   }

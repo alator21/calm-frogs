@@ -34,6 +34,10 @@ import {
   HashtagComponent
 } from './components/hashtag/hashtag.component';
 
+import {
+  UserEditComponent
+} from './components/user-edit/user-edit.component';
+
 const routes: Routes = [{
     'path': '',
     'component': PostsComponent
@@ -65,6 +69,10 @@ const routes: Routes = [{
   {
     'path': 'hashtag/:hashtag',
     'component': HashtagComponent
+  },
+  {
+    'path': 'users/edit',
+    'component': UserEditComponent
   },
 ];
 

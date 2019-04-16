@@ -25,7 +25,7 @@ import {
 export class UsersComponent implements OnInit {
   private usersAndFollowStatus: AllUsersDataSource;
   private user: User;
-  constructor(private userService: UserService,private followService:FollowService) {}
+  constructor(private userService: UserService, private followService: FollowService) {}
 
   async ngOnInit() {
     let username = '';
@@ -38,23 +38,34 @@ export class UsersComponent implements OnInit {
     await this.usersAndFollowStatus.search(username);
   }
 
-  async follow(user){
-    try{
+  async follow(user) {
+    try {
       let d = await this.followService.follow(user);
-      alert('You followed him succesfully.');
-    }catch(e){
+      if (d.ok) {
+        this.changeStatus(user,'true');
+      } else {
+        alert(`Something wen't wrong`);
+      }
+    } catch (e) {
 
     }
-    
   }
 
-  async unfollow(user){
-    try{
+  async unfollow(user) {
+    try {
       let d = await this.followService.unfollow(user);
-      alert('You unfollowed him succesfully.');
-    }catch(e){
+      if (d.ok) {
+        this.changeStatus(user,'false');
+      } else {
+        alert(`Something wen't wrong`);
+      }
+    } catch (e) {
 
     }
+  }
+
+  async changeStatus(user,status) {
+    this.usersAndFollowStatus.changeUserFollowStatus(user,status);
   }
 
 }

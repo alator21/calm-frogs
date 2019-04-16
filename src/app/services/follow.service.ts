@@ -11,11 +11,10 @@ export class FollowService {
 
 
   async follow(user): Promise < any > {
-    console.log(user);
-    return {'success': 'yes'};
+    return {'ok': true};
   }
 
   async unfollow(user): Promise < any > {
-    return {'success': 'yes'};
+    return {'ok': true};
   }
 }

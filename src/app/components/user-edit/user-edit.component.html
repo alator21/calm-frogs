@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="form" *ngIf="user">
+    <form autocomplete="off">
+      <p>
+        <mat-form-field>
+          <input type="text" autocomplete="off" matInput placeholder="Username" [(ngModel)]="user.username"
+            name="username">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input type="text" autocomplete="off" matInput placeholder="Real Name" [(ngModel)]="user.realName"
+            name="realName">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input type="text" autocomplete="off" matInput placeholder="Email" [(ngModel)]="user.email"
+            name="email">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <input type="text" autocomplete="off" matInput placeholder="Password" [(ngModel)]="user.password"
+            name="password">
+        </mat-form-field>
+      </p>
+      <button type='button' mat-flat-button color="primary" (click)="updateDetails()">Update</button>
+    </form>
+  </div>
+</div>

@@ -41,6 +41,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 import { PostDetailsComponent } from './components/post-details/post-details.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
 import { HashtagComponent } from './components/hashtag/hashtag.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { HashtagComponent } from './components/hashtag/hashtag.component';
     UserDetailsComponent,
     PostDetailsComponent,
     NewPostComponent,
-    HashtagComponent
+    HashtagComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

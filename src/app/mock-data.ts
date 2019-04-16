@@ -94,6 +94,14 @@ export const USERFOLLOWS: any = [
   },
   {
     'user': USERS[1],
+    'follows': USERS[3]
+  },
+  {
+    'user': USERS[1],
+    'follows': USERS[5]
+  },
+  {
+    'user': USERS[1],
     'follows': USERS[6]
   },
   {

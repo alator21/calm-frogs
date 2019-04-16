@@ -92,6 +92,11 @@ export class UserService {
       user,
       iFollowHim
     }).toPromise();
+  }
 
+  async updateUser(user: User): Promise < any > {
+    return of({
+      'ok': true
+    }).toPromise();
   }
 }

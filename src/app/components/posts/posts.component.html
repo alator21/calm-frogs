@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<div class="container" *ngIf="posts && posts.length>0">
+<div class="container" *ngIf="isUserLoggedIn && posts && posts.length>0">
   <div class="posts">
     <cdk-virtual-scroll-viewport itemSize="150">
       <div *cdkVirtualFor="let post of posts">
@@ -31,7 +31,7 @@
             </span> &nbsp;&nbsp;
             By
             <span class='author'>
-              <a routerLink="/users/user/{{post.author.username}}">{{post.author.realName}}</a>
+              <a class='author' routerLink="/users/user/{{post.author.username}}">{{post.author.realName}}</a>
             </span>
           </p>
           <hr>

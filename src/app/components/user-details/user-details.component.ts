@@ -29,6 +29,10 @@ import {
 } from '../../services/post.service';
 
 import {
+  FollowService
+} from '../../services/follow.service';
+
+import {
   UserPostsDataSource
 } from '../../dataSources/post-data-source';
 @Component({
@@ -42,7 +46,7 @@ export class UserDetailsComponent implements OnInit {
   private username: string;
   private iFollowHim = "";
   private posts: UserPostsDataSource;
-  constructor(private sanitizer: DomSanitizer, private router: Router, private route: ActivatedRoute, private userService: UserService, private postService: PostService) {}
+  constructor(private followService: FollowService, private sanitizer: DomSanitizer, private router: Router, private route: ActivatedRoute, private userService: UserService, private postService: PostService) {}
 
   async ngOnInit() {
     try {
@@ -57,6 +61,33 @@ export class UserDetailsComponent implements OnInit {
       console.log(e);
     }
 
+  }
+
+  async follow() {
+    try {
+      let d = await this.followService.follow(this.user);
+      if (d.ok) {
+        this.iFollowHim = 'true';
+      } else {
+        alert(`Something wen't wrong`);
+      }
+    } catch (e) {
+
+    }
+  }
+
+
+  async unfollow() {
+    try {
+      let d = await this.followService.unfollow(this.user);
+      if (d.ok) {
+        this.iFollowHim = 'false';
+      } else {
+        alert(`Something wen't wrong`);
+      }
+    } catch (e) {
+
+    }
   }
 
   highlightHashtagsAndMentions(post: Post) {
