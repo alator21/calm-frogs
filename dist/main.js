@@ -43,6 +43,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_user_details_user_details_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/user-details/user-details.component */ "./src/app/components/user-details/user-details.component.ts");
 /* harmony import */ var _components_post_details_post_details_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/post-details/post-details.component */ "./src/app/components/post-details/post-details.component.ts");
 /* harmony import */ var _components_hashtag_hashtag_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/hashtag/hashtag.component */ "./src/app/components/hashtag/hashtag.component.ts");
+/* harmony import */ var _components_user_edit_user_edit_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/user-edit/user-edit.component */ "./src/app/components/user-edit/user-edit.component.ts");
+
 
 
 
@@ -84,6 +86,10 @@ var routes = [{
     {
         'path': 'hashtag/:hashtag',
         'component': _components_hashtag_hashtag_component__WEBPACK_IMPORTED_MODULE_9__["HashtagComponent"]
+    },
+    {
+        'path': 'users/edit',
+        'component': _components_user_edit_user_edit_component__WEBPACK_IMPORTED_MODULE_10__["UserEditComponent"]
     },
 ];
 var AppRoutingModule = /** @class */ (function () {
@@ -185,6 +191,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_post_details_post_details_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/post-details/post-details.component */ "./src/app/components/post-details/post-details.component.ts");
 /* harmony import */ var _components_new_post_new_post_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/new-post/new-post.component */ "./src/app/components/new-post/new-post.component.ts");
 /* harmony import */ var _components_hashtag_hashtag_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/hashtag/hashtag.component */ "./src/app/components/hashtag/hashtag.component.ts");
+/* harmony import */ var _components_user_edit_user_edit_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/user-edit/user-edit.component */ "./src/app/components/user-edit/user-edit.component.ts");
+
 
 
 
@@ -219,7 +227,8 @@ var AppModule = /** @class */ (function () {
                 _components_user_details_user_details_component__WEBPACK_IMPORTED_MODULE_15__["UserDetailsComponent"],
                 _components_post_details_post_details_component__WEBPACK_IMPORTED_MODULE_16__["PostDetailsComponent"],
                 _components_new_post_new_post_component__WEBPACK_IMPORTED_MODULE_17__["NewPostComponent"],
-                _components_hashtag_hashtag_component__WEBPACK_IMPORTED_MODULE_18__["HashtagComponent"]
+                _components_hashtag_hashtag_component__WEBPACK_IMPORTED_MODULE_18__["HashtagComponent"],
+                _components_user_edit_user_edit_component__WEBPACK_IMPORTED_MODULE_19__["UserEditComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -369,7 +378,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"form\">\n    <form autocomplete=\"off\">\n      <p>\n        <mat-form-field>\n          <input type=\"text\" autocomplete=\"off\" matInput placeholder=\"Username\" [(ngModel)]=\"user.username\"\n            name=\"username\">\n        </mat-form-field>\n      </p>\n      <p>\n        <mat-form-field>\n          <input type=\"password\" autocomplete=\"off\" matInput placeholder=\"Password\" [(ngModel)]=\"user.password\"\n            name=\"password\">\n        </mat-form-field>\n      </p>\n      <button type='button' mat-flat-button color=\"primary\" (click)=\"login(user)\">Login</button>\n    </form>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <div class=\"form\" >\n    <form autocomplete=\"off\" (submit)=\"login(user)\" >\n      <p>\n        <mat-form-field>\n          <input type=\"text\" autocomplete=\"off\" matInput placeholder=\"Username\" [(ngModel)]=\"user.username\"\n            name=\"username\">\n        </mat-form-field>\n      </p>\n      <p>\n        <mat-form-field>\n          <input type=\"password\" autocomplete=\"off\" matInput placeholder=\"Password\" [(ngModel)]=\"user.password\"\n            name=\"password\">\n        </mat-form-field>\n      </p>\n      <button type='submit' mat-flat-button color=\"primary\" (click)=\"login(user)\">Login</button>\n    </form>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -727,7 +736,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!isUserLoggedIn\">\n  <div class=\"warning\">\n    You aren't logged in. Log in to see tweets!!\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"isUserLoggedIn && (!posts || (posts && posts.length ===0))\">\n  <div class=\"error\">\n    There are no tweets right now.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"isUserLoggedIn\">\n  <div class='form'>\n    <app-new-post></app-new-post>\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"posts && posts.length>0\">\n  <div class=\"posts\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let post of posts\">\n        <div *ngIf=\"post\" class='scrollItem'>\n          <p>\n            <a [innerHTML]=\"highlightHashtagsAndMentions(post)\" (click)=\"goToLink($event)\">\n            </a>\n          </p>\n          <p>\n            <span class='created_at'>\n              {{post.created_at}}\n            </span> &nbsp;&nbsp;\n            By\n            <span class='author'>\n              <a routerLink=\"/users/user/{{post.author.username}}\">{{post.author.realName}}</a>\n            </span>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\" *ngIf=\"!isUserLoggedIn\">\n  <div class=\"warning\">\n    You aren't logged in. Log in to see tweets!!\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"isUserLoggedIn && (!posts || (posts && posts.length ===0))\">\n  <div class=\"error\">\n    There are no tweets right now.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"isUserLoggedIn\">\n  <div class='form'>\n    <app-new-post></app-new-post>\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"isUserLoggedIn && posts && posts.length>0\">\n  <div class=\"posts\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let post of posts\">\n        <div *ngIf=\"post\" class='scrollItem'>\n          <p>\n            <a [innerHTML]=\"highlightHashtagsAndMentions(post)\" (click)=\"goToLink($event)\">\n            </a>\n          </p>\n          <p>\n            <span class='created_at'>\n              {{post.created_at}}\n            </span> &nbsp;&nbsp;\n            By\n            <span class='author'>\n              <a class='author' routerLink=\"/users/user/{{post.author.username}}\">{{post.author.realName}}</a>\n            </span>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -931,7 +940,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!username\">\n  <div class=\"error\">\n    There is no user with such username.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    There is no user with username: {{username}}.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div>\n    <mat-card>\n      <mat-card-header>\n        <div mat-card-avatar></div>\n        <mat-card-title>{{user.username}}</mat-card-title>\n        <mat-card-subtitle>{{user.realName}}</mat-card-subtitle>\n        <mat-card-subtitle>{{user.email}}</mat-card-subtitle>\n        <mat-card-subtitle *ngIf=\"iFollowHim === 'true' \"><button mat-flat-button color=\"primary\">Unfollow</button></mat-card-subtitle>\n        <mat-card-subtitle *ngIf=\"iFollowHim === 'false' \"><button mat-flat-button color=\"primary\">Follow</button></mat-card-subtitle>\n        <mat-card-subtitle *ngIf=\"iFollowHim === 'mine' \"><button mat-flat-button color=\"primary\">Edit</button></mat-card-subtitle>\n      </mat-card-header>\n    </mat-card>\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"!posts || (posts && posts.length === 0)\">\n  <div class=\"error\">\n    There are no tweets right now.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"posts && posts.length>0\">\n  <div class=\"posts\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let post of posts\">\n        <div *ngIf=\"post\" class='scrollItem'>\n          <p>\n            <a [innerHTML]=\"highlightHashtagsAndMentions(post)\" (click)=\"goToLink($event)\">\n            </a>\n          </p>\n          <p>\n            <span class='created_at'>\n              {{post.created_at}}\n            </span> &nbsp;&nbsp;\n            By\n            <span>\n              <a (click)=\"goToLink($event)\" attr.data-link=\"/users/user/{{post.author.username}}\"\n                class='author'>{{post.author.realName}}</a>\n            </span>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\" *ngIf=\"!username\">\n  <div class=\"error\">\n    There is no user with such username.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    There is no user with username: {{username}}.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div>\n    <mat-card>\n      <mat-card-header>\n        <div mat-card-avatar></div>\n        <mat-card-title>{{user.username}}</mat-card-title>\n        <mat-card-subtitle>{{user.realName}}</mat-card-subtitle>\n        <mat-card-subtitle>{{user.email}}</mat-card-subtitle>\n        <mat-card-subtitle *ngIf=\"iFollowHim === 'true'\" (click)=\"unfollow()\"><button mat-flat-button\n            color=\"primary\">Unfollow</button></mat-card-subtitle>\n        <mat-card-subtitle *ngIf=\"iFollowHim === 'false'\" (click)=\"follow()\"><button mat-flat-button\n            color=\"primary\">Follow</button></mat-card-subtitle>\n        <mat-card-subtitle *ngIf=\"iFollowHim === 'mine'\" routerLink=\"/users/edit\"><button mat-flat-button\n            color=\"primary\">Edit Profile</button></mat-card-subtitle>\n      </mat-card-header>\n    </mat-card>\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"!posts || (posts && posts.length === 0)\">\n  <div class=\"error\">\n    There are no tweets right now.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"posts && posts.length>0\">\n  <div class=\"posts\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let post of posts\">\n        <div *ngIf=\"post\" class='scrollItem'>\n          <p>\n            <a [innerHTML]=\"highlightHashtagsAndMentions(post)\" (click)=\"goToLink($event)\">\n            </a>\n          </p>\n          <p>\n            <span class='created_at'>\n              {{post.created_at}}\n            </span> &nbsp;&nbsp;\n            By\n            <span>\n              <a (click)=\"goToLink($event)\" attr.data-link=\"/users/user/{{post.author.username}}\"\n                class='author'>{{post.author.realName}}</a>\n            </span>\n          </p>\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -951,7 +960,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _services_post_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/post.service */ "./src/app/services/post.service.ts");
-/* harmony import */ var _dataSources_post_data_source__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../dataSources/post-data-source */ "./src/app/dataSources/post-data-source.ts");
+/* harmony import */ var _services_follow_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/follow.service */ "./src/app/services/follow.service.ts");
+/* harmony import */ var _dataSources_post_data_source__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../dataSources/post-data-source */ "./src/app/dataSources/post-data-source.ts");
+
 
 
 
@@ -960,7 +971,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var UserDetailsComponent = /** @class */ (function () {
-    function UserDetailsComponent(sanitizer, router, route, userService, postService) {
+    function UserDetailsComponent(followService, sanitizer, router, route, userService, postService) {
+        this.followService = followService;
         this.sanitizer = sanitizer;
         this.router = router;
         this.route = route;
@@ -985,13 +997,63 @@ var UserDetailsComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.postService.getPostsOfUserLength(searchString, this.username)];
                     case 2:
                         numberOfPosts = _a.sent();
-                        this.posts = new _dataSources_post_data_source__WEBPACK_IMPORTED_MODULE_6__["UserPostsDataSource"](this.postService, numberOfPosts, this.username, searchString);
+                        this.posts = new _dataSources_post_data_source__WEBPACK_IMPORTED_MODULE_7__["UserPostsDataSource"](this.postService, numberOfPosts, this.username, searchString);
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _a.sent();
                         console.log(e_1);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserDetailsComponent.prototype.follow = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var d, e_2;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.followService.follow(this.user)];
+                    case 1:
+                        d = _a.sent();
+                        if (d.ok) {
+                            this.iFollowHim = 'true';
+                        }
+                        else {
+                            alert("Something wen't wrong");
+                        }
+                        return [3 /*break*/, 3];
+                    case 2:
+                        e_2 = _a.sent();
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserDetailsComponent.prototype.unfollow = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var d, e_3;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.followService.unfollow(this.user)];
+                    case 1:
+                        d = _a.sent();
+                        if (d.ok) {
+                            this.iFollowHim = 'false';
+                        }
+                        else {
+                            alert("Something wen't wrong");
+                        }
+                        return [3 /*break*/, 3];
+                    case 2:
+                        e_3 = _a.sent();
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
@@ -1031,9 +1093,108 @@ var UserDetailsComponent = /** @class */ (function () {
             encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewEncapsulation"].None,
             styles: [__webpack_require__(/*! ./user-details.component.css */ "./src/app/components/user-details/user-details.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _services_post_service__WEBPACK_IMPORTED_MODULE_5__["PostService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_follow_service__WEBPACK_IMPORTED_MODULE_6__["FollowService"], _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["DomSanitizer"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _services_post_service__WEBPACK_IMPORTED_MODULE_5__["PostService"]])
     ], UserDetailsComponent);
     return UserDetailsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/user-edit/user-edit.component.css":
+/*!**************************************************************!*\
+  !*** ./src/app/components/user-edit/user-edit.component.css ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvdXNlci1lZGl0L3VzZXItZWRpdC5jb21wb25lbnQuY3NzIn0= */"
+
+/***/ }),
+
+/***/ "./src/app/components/user-edit/user-edit.component.html":
+/*!***************************************************************!*\
+  !*** ./src/app/components/user-edit/user-edit.component.html ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n  <div class=\"form\" *ngIf=\"user\">\n    <form autocomplete=\"off\">\n      <p>\n        <mat-form-field>\n          <input type=\"text\" autocomplete=\"off\" matInput placeholder=\"Username\" [(ngModel)]=\"user.username\"\n            name=\"username\">\n        </mat-form-field>\n      </p>\n      <p>\n        <mat-form-field>\n          <input type=\"text\" autocomplete=\"off\" matInput placeholder=\"Real Name\" [(ngModel)]=\"user.realName\"\n            name=\"realName\">\n        </mat-form-field>\n      </p>\n      <p>\n        <mat-form-field>\n          <input type=\"text\" autocomplete=\"off\" matInput placeholder=\"Email\" [(ngModel)]=\"user.email\"\n            name=\"email\">\n        </mat-form-field>\n      </p>\n      <p>\n        <mat-form-field>\n          <input type=\"text\" autocomplete=\"off\" matInput placeholder=\"Password\" [(ngModel)]=\"user.password\"\n            name=\"password\">\n        </mat-form-field>\n      </p>\n      <button type='button' mat-flat-button color=\"primary\" (click)=\"updateDetails()\">Update</button>\n    </form>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/user-edit/user-edit.component.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/components/user-edit/user-edit.component.ts ***!
+  \*************************************************************/
+/*! exports provided: UserEditComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserEditComponent", function() { return UserEditComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/user.service */ "./src/app/services/user.service.ts");
+
+
+
+
+
+var UserEditComponent = /** @class */ (function () {
+    function UserEditComponent(authService, userService, router) {
+        this.authService = authService;
+        this.userService = userService;
+        this.router = router;
+    }
+    UserEditComponent.prototype.ngOnInit = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _a;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this;
+                        return [4 /*yield*/, this.authService.getTHEUser()];
+                    case 1:
+                        _a.user = _b.sent();
+                        this.user.password = '';
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserEditComponent.prototype.updateDetails = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var d;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.userService.updateUser(this.user)];
+                    case 1:
+                        d = _a.sent();
+                        if (d.ok) {
+                            alert('Details updated successfully.');
+                            this.router.navigateByUrl('/');
+                        }
+                        else {
+                            alert("Something wen't wrong!");
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserEditComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-user-edit',
+            template: __webpack_require__(/*! ./user-edit.component.html */ "./src/app/components/user-edit/user-edit.component.html"),
+            styles: [__webpack_require__(/*! ./user-edit.component.css */ "./src/app/components/user-edit/user-edit.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+    ], UserEditComponent);
+    return UserEditComponent;
 }());
 
 
@@ -1058,7 +1219,7 @@ module.exports = ".example-viewport {\n  text-align: center;\n  height: 60vh;\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    Something wen't wrong.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div class=\"form\">\n    <mat-form-field>\n      <input matInput placeholder=\"Search by username\" [(ngModel)]=\"user.username\" (ngModelChange)=\"onChange($event)\"\n        autocomplete=\"off\">\n    </mat-form-field>\n  </div>\n</div>\n\n\n<div class=\"container\"\n  *ngIf=\"!usersAndFollowStatus || (usersAndFollowStatus[0] && usersAndFollowStatus[0].length === 0)\">\n  <div class=\"error\">\n    There are not available users.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"usersAndFollowStatus && usersAndFollowStatus.length>0\">\n  <div class=\"users\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let d of usersAndFollowStatus\" class='scrollItem'>\n        <div *ngIf=\"user\">\n          <p>\n            <a routerLink=\"/users/user/{{d[0].username}}\" class='author'>{{d[0].username || 'Loading...'}}</a>\n            |\n            <span *ngIf=\"d[1] ==='true'\">\n              <button mat-flat-button color=\"primary\" (click)=\"unfollow(d[0])\">Unfollow</button>\n            </span>\n            <span *ngIf=\"d[1] === 'false'\">\n              <button mat-flat-button color=\"primary\" (click)=\"follow(d[0])\">Follow</button>\n            </span>\n            <span *ngIf=\"d[1] === 'mine'\">\n              <button mat-flat-button color=\"primary\"  disabled>Mine</button>\n            </span>\n          </p>\n\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\" *ngIf=\"!user\">\n  <div class=\"error\">\n    Something wen't wrong.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"user\">\n  <div class=\"form\">\n    <mat-form-field>\n      <input matInput placeholder=\"Search by username\" [(ngModel)]=\"user.username\" (ngModelChange)=\"onChange($event)\"\n        autocomplete=\"off\">\n    </mat-form-field>\n  </div>\n</div>\n\n\n<div class=\"container\"\n  *ngIf=\"!usersAndFollowStatus || (usersAndFollowStatus[0] && usersAndFollowStatus[0].length === 0)\">\n  <div class=\"error\">\n    There are not available users.\n  </div>\n</div>\n\n<div class=\"container\" *ngIf=\"usersAndFollowStatus && usersAndFollowStatus.length>0\">\n  <div class=\"users\">\n    <cdk-virtual-scroll-viewport itemSize=\"150\">\n      <div *cdkVirtualFor=\"let d of usersAndFollowStatus\" class='scrollItem'>\n        <div *ngIf=\"user\">\n          <p>\n            <a routerLink=\"/users/user/{{d[0].username}}\" class='author'>{{d[0].username || 'Loading...'}}</a>\n            |\n            <span *ngIf=\"d[1] ==='true'\">\n              <button mat-flat-button color=\"primary\" (click)=\"unfollow(d[0])\">Unfollow</button>\n            </span>\n            <span *ngIf=\"d[1] === 'false'\">\n              <button mat-flat-button color=\"primary\" (click)=\"follow(d[0])\">Follow</button>\n            </span>\n            <span *ngIf=\"d[1] === 'mine'\">\n              <button mat-flat-button color=\"primary\" routerLink=\"/users/edit\">Edit profile</button>\n            </span>\n          </p>\n\n          <hr>\n        </div>\n      </div>\n    </cdk-virtual-scroll-viewport>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1128,7 +1289,12 @@ var UsersComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.followService.follow(user)];
                     case 1:
                         d = _a.sent();
-                        alert('You followed him succesfully.');
+                        if (d.ok) {
+                            this.changeStatus(user, 'true');
+                        }
+                        else {
+                            alert("Something wen't wrong");
+                        }
                         return [3 /*break*/, 3];
                     case 2:
                         e_1 = _a.sent();
@@ -1148,13 +1314,26 @@ var UsersComponent = /** @class */ (function () {
                         return [4 /*yield*/, this.followService.unfollow(user)];
                     case 1:
                         d = _a.sent();
-                        alert('You unfollowed him succesfully.');
+                        if (d.ok) {
+                            this.changeStatus(user, 'false');
+                        }
+                        else {
+                            alert("Something wen't wrong");
+                        }
                         return [3 /*break*/, 3];
                     case 2:
                         e_2 = _a.sent();
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
+            });
+        });
+    };
+    UsersComponent.prototype.changeStatus = function (user, status) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                this.usersAndFollowStatus.changeUserFollowStatus(user, status);
+                return [2 /*return*/];
             });
         });
     };
@@ -1581,6 +1760,23 @@ var AllUsersDataSource = /** @class */ (function (_super) {
     AllUsersDataSource.prototype.disconnect = function () {
         this.subscription.unsubscribe();
     };
+    AllUsersDataSource.prototype.changeUserFollowStatus = function (user, status) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var _i, _a, d;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_b) {
+                for (_i = 0, _a = this.cachedData; _i < _a.length; _i++) {
+                    d = _a[_i];
+                    if (d) {
+                        if (user.username === d[0].username) {
+                            d[1] = status;
+                            break;
+                        }
+                    }
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
     AllUsersDataSource.prototype.search = function (username) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             var numberOfUsers;
@@ -1792,6 +1988,14 @@ var USERFOLLOWS = [
     {
         'user': USERS[1],
         'follows': USERS[2]
+    },
+    {
+        'user': USERS[1],
+        'follows': USERS[3]
+    },
+    {
+        'user': USERS[1],
+        'follows': USERS[5]
     },
     {
         'user': USERS[1],
@@ -2224,15 +2428,14 @@ var FollowService = /** @class */ (function () {
     FollowService.prototype.follow = function (user) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                console.log(user);
-                return [2 /*return*/, { 'success': 'yes' }];
+                return [2 /*return*/, { 'ok': true }];
             });
         });
     };
     FollowService.prototype.unfollow = function (user) {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                return [2 /*return*/, { 'success': 'yes' }];
+                return [2 /*return*/, { 'ok': true }];
             });
         });
     };
@@ -2575,6 +2778,15 @@ var UserService = /** @class */ (function () {
                                 iFollowHim: iFollowHim
                             }).toPromise()];
                 }
+            });
+        });
+    };
+    UserService.prototype.updateUser = function (user) {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                return [2 /*return*/, Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+                        'ok': true
+                    }).toPromise()];
             });
         });
     };
