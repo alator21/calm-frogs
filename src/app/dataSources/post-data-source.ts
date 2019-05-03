@@ -72,7 +72,7 @@ export class AllPostsDataSource extends DataSource < Post | undefined > {
       return;
     }
     this.fetchedPages.add(page);
-    let d = await this.postService.getPostsFromUsersIFollow(this.searchString, this.username, this.pageSize, page);
+	let d = await this.postService.getPostsFromUsersIFollow(this.searchString, this.username, this.pageSize, page);
     this.cachedData.splice(page * this.pageSize, this.pageSize,
       ...Array.from < Post > ({
         length: d.length
